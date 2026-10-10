@@ -49,6 +49,50 @@
       </header>
       <div class="detail-body" id="detail-body">内容待更新</div>
     </section>
+
+    <section id="view-register" class="view">
+      <header class="page-head detail-head">
+        <a class="btn-back" href="#/">‹ 返回</a>
+        <h1 class="page-title">体验课报名</h1>
+      </header>
+
+      <div class="form-group">
+        <label class="form-label">家长姓名</label>
+        <div id="parent-rows"></div>
+        <button type="button" class="btn-add" id="add-parent">添加家长</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">孩子姓名与年级</label>
+        <div id="child-rows"></div>
+        <button type="button" class="btn-add" id="add-child">添加孩子</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">感兴趣的课程</label>
+        <button type="button" class="course-select" id="course-select">请选择课程</button>
+        <div class="course-menu" id="course-menu"></div>
+        <div class="chips" id="course-chips"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">家长手机号</label>
+        <div class="phone-row">
+          <input type="text" inputmode="numeric" id="phone" placeholder="12345678910" maxlength="11" autocomplete="off">
+          <button type="button" class="btn-code" id="send-code">发送验证码</button>
+        </div>
+        <div class="field-error" id="phone-error"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">验证码</label>
+        <input type="text" inputmode="numeric" id="code" placeholder="请输入4位验证码" maxlength="4" autocomplete="off">
+      </div>
+
+      <div class="cta-wrap">
+        <button type="button" class="btn-primary" id="submit" disabled>立即报名</button>
+      </div>
+    </section>
   </div>
 
   <script src="js/data.js"></script>

@@ -79,13 +79,73 @@
     }
   }
 
+  var state = D.createInitialState();
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function renderParentRows() {
+    var el = document.getElementById('parent-rows');
+    if (!el) { return; }
+    el.innerHTML = state.parents.map(function (p, i) {
+      return '<div class="row">' +
+        '<input type="text" class="parent-name" placeholder="请输入家长姓名" value="' + esc(p) + '">' +
+        '<button type="button" class="row-del" data-index="' + i + '">×</button>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderChildRows() {
+    var el = document.getElementById('child-rows');
+    if (!el) { return; }
+    el.innerHTML = state.children.map(function (c, i) {
+      var options = D.GRADES.map(function (g) {
+        return '<option value="' + esc(g) + '"' + (c.grade === g ? ' selected' : '') + '>' + esc(g) + '</option>';
+      }).join('');
+      return '<div class="row">' +
+        '<input type="text" class="child-name" placeholder="请输入孩子姓名" value="' + esc(c.name) + '">' +
+        '<select class="child-grade"><option value="">请选择年级</option>' + options + '</select>' +
+        '<button type="button" class="row-del" data-index="' + i + '">×</button>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderCourseMenu() {
+    var el = document.getElementById('course-menu');
+    if (!el) { return; }
+    el.innerHTML = D.COURSES.map(function (c) {
+      var checked = state.courses.indexOf(c) !== -1 ? ' checked' : '';
+      return '<label><input type="checkbox" class="course-option" value="' + esc(c) + '"' + checked + '> ' + esc(c) + '</label>';
+    }).join('');
+  }
+
+  function renderCourseChips() {
+    var el = document.getElementById('course-chips');
+    if (!el) { return; }
+    el.innerHTML = state.courses.map(function (c) {
+      return '<span class="chip">' + esc(c) + '</span>';
+    }).join('');
+  }
+
+  function renderRegister() {
+    renderParentRows();
+    renderChildRows();
+    renderCourseMenu();
+    renderCourseChips();
+  }
+
   function init() {
     renderPoster();
+    renderRegister();
     render();
   }
 
   window.App.init = init;
   window.App.render = render;
+  window.App.renderRegister = renderRegister;
 
   if (typeof document !== 'undefined' && document.readyState !== 'loading') {
     init();

@@ -74,3 +74,33 @@ test('详情页返回链接指向海报', () => {
   const d = dom.window.document;
   assert.equal(d.querySelector('#view-detail .btn-back').getAttribute('href'), '#/');
 });
+
+test('报名页展示初始表单结构', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  assert.ok(d.getElementById('view-register').classList.contains('active'));
+  assert.equal(d.querySelectorAll('#parent-rows .row').length, 1);
+  assert.equal(d.querySelectorAll('#child-rows .row').length, 1);
+  assert.equal(d.querySelectorAll('#course-menu .course-option').length, 11);
+  assert.equal(d.getElementById('submit').disabled, true);
+  assert.equal(d.getElementById('send-code').textContent, '发送验证码');
+});
+
+test('年级下拉包含 18 个年级选项', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  const grade = d.querySelector('#child-rows .child-grade');
+  const real = Array.from(grade.options).filter((o) => o.value !== '');
+  assert.equal(real.length, 18);
+  assert.equal(real[0].value, '幼儿园一年级');
+  assert.equal(real[17].value, '博士');
+});
+
+test('手机号与验证码输入框占位和长度限制正确', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  const phone = d.getElementById('phone');
+  assert.equal(phone.getAttribute('placeholder'), '12345678910');
+  assert.equal(phone.getAttribute('maxlength'), '11');
+  assert.equal(d.getElementById('code').getAttribute('maxlength'), '4');
+});
