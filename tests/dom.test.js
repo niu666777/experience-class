@@ -218,3 +218,48 @@ test('提交后按钮变为正在提交并跳转结果页', async () => {
   assert.ok(d.getElementById('view-result').classList.contains('active'));
   dom.window.close();
 });
+
+test('全流程：海报→详情→返回→报名→提交→结果', async () => {
+  const dom = loadApp();
+  const win = dom.window;
+  const d = win.document;
+
+  assert.ok(d.getElementById('view-poster').classList.contains('active'));
+
+  win.location.hash = '#/detail/course';
+  win.App.render();
+  assert.equal(d.getElementById('detail-title').textContent, '课程特色');
+
+  win.location.hash = '#/';
+  win.App.render();
+  assert.ok(d.getElementById('view-poster').classList.contains('active'));
+
+  win.location.hash = '#/register';
+  win.App.render();
+  assert.ok(d.getElementById('view-register').classList.contains('active'));
+
+  fireInput(d, d.querySelector('#parent-rows .parent-name'), '张三');
+  fireInput(d, d.querySelector('#child-rows .child-name'), '小明');
+  fireChange(d, d.querySelector('#child-rows .child-grade'), '小学三年级');
+  const opt = d.querySelector('#course-menu .course-option[value="语文"]');
+  opt.checked = true;
+  opt.dispatchEvent(new win.Event('change', { bubbles: true }));
+  fireInput(d, d.getElementById('phone'), '13800138000');
+  fireInput(d, d.getElementById('code'), '1234');
+  d.getElementById('submit').click();
+
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  assert.ok(d.getElementById('view-result').classList.contains('active'));
+
+  d.getElementById('btn-known').click();
+  assert.equal(d.getElementById('result-feedback').textContent, '报名结束，请耐心等待通知');
+  dom.window.close();
+});
+
+test('页面具备移动端视口与响应式样式', () => {
+  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  assert.match(html, /name="viewport"/);
+  const css = fs.readFileSync(path.join(ROOT, 'css', 'styles.css'), 'utf8');
+  assert.match(css, /max-width:\s*640px/);
+  assert.match(css, /@media\s*\(min-width:\s*768px\)/);
+});
