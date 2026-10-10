@@ -92,7 +92,7 @@
     if (!el) { return; }
     el.innerHTML = state.parents.map(function (p, i) {
       return '<div class="row">' +
-        '<input type="text" class="parent-name" placeholder="请输入家长姓名" value="' + esc(p) + '">' +
+        '<input type="text" class="parent-name" placeholder="请输入家长姓名" value="' + esc(p) + '" data-index="' + i + '">' +
         '<button type="button" class="row-del" data-index="' + i + '">×</button>' +
         '</div>';
     }).join('');
@@ -106,8 +106,8 @@
         return '<option value="' + esc(g) + '"' + (c.grade === g ? ' selected' : '') + '>' + esc(g) + '</option>';
       }).join('');
       return '<div class="row">' +
-        '<input type="text" class="child-name" placeholder="请输入孩子姓名" value="' + esc(c.name) + '">' +
-        '<select class="child-grade"><option value="">请选择年级</option>' + options + '</select>' +
+        '<input type="text" class="child-name" placeholder="请输入孩子姓名" value="' + esc(c.name) + '" data-index="' + i + '">' +
+        '<select class="child-grade" data-index="' + i + '"><option value="">请选择年级</option>' + options + '</select>' +
         '<button type="button" class="row-del" data-index="' + i + '">×</button>' +
         '</div>';
     }).join('');
@@ -137,9 +137,128 @@
     renderCourseChips();
   }
 
+  var countdown = null;
+
+  function rowIndex(el) {
+    var row = el.closest('.row');
+    return Array.prototype.indexOf.call(row.parentNode.children, row);
+  }
+
+  function setPhoneError(msg) {
+    document.getElementById('phone-error').textContent = msg;
+  }
+
+  function clearPhoneError() {
+    setPhoneError('');
+  }
+
+  function syncSubmit() {
+    var btn = document.getElementById('submit');
+    btn.disabled = !D.isComplete(state);
+  }
+
+  function sendCode() {
+    var btn = document.getElementById('send-code');
+    if (!D.isValidPhone(state.phone)) {
+      setPhoneError(D.COPY.PHONE_ERROR);
+      return;
+    }
+    clearPhoneError();
+    if (countdown && countdown.isRunning()) { return; }
+    btn.disabled = true;
+    countdown = new D.Countdown({
+      onTick: function (r) { btn.textContent = D.formatCountdownLabel(r); },
+      onDone: function () { btn.disabled = false; btn.textContent = D.COPY.SEND_CODE_LABEL; }
+    });
+    countdown.start(D.COPY.COUNTDOWN_SECONDS);
+  }
+
+  function bindEvents() {
+    document.getElementById('add-parent').addEventListener('click', function () {
+      state = D.addParent(state);
+      renderParentRows();
+      syncSubmit();
+    });
+
+    document.getElementById('add-child').addEventListener('click', function () {
+      state = D.addChild(state);
+      renderChildRows();
+      syncSubmit();
+    });
+
+    document.getElementById('parent-rows').addEventListener('input', function (e) {
+      if (e.target.classList.contains('parent-name')) {
+        state = D.updateParent(state, rowIndex(e.target), e.target.value);
+        syncSubmit();
+      }
+    });
+
+    document.getElementById('parent-rows').addEventListener('click', function (e) {
+      if (e.target.classList.contains('row-del')) {
+        state = D.removeParent(state, rowIndex(e.target));
+        renderParentRows();
+        syncSubmit();
+      }
+    });
+
+    document.getElementById('child-rows').addEventListener('input', function (e) {
+      if (e.target.classList.contains('child-name')) {
+        state = D.updateChild(state, rowIndex(e.target), 'name', e.target.value);
+        syncSubmit();
+      }
+    });
+
+    document.getElementById('child-rows').addEventListener('change', function (e) {
+      if (e.target.classList.contains('child-grade')) {
+        state = D.updateChild(state, rowIndex(e.target), 'grade', e.target.value);
+        syncSubmit();
+      }
+    });
+
+    document.getElementById('child-rows').addEventListener('click', function (e) {
+      if (e.target.classList.contains('row-del')) {
+        state = D.removeChild(state, rowIndex(e.target));
+        renderChildRows();
+        syncSubmit();
+      }
+    });
+
+    document.getElementById('course-select').addEventListener('click', function () {
+      document.getElementById('course-menu').classList.toggle('open');
+    });
+
+    document.getElementById('course-menu').addEventListener('change', function (e) {
+      if (e.target.classList.contains('course-option')) {
+        state = D.toggleCourse(state, e.target.value);
+        renderCourseMenu();
+        renderCourseChips();
+        syncSubmit();
+      }
+    });
+
+    document.getElementById('phone').addEventListener('input', function (e) {
+      state = D.setPhone(state, e.target.value);
+      if (e.target.value !== '' && !D.isValidPhone(e.target.value)) {
+        setPhoneError(D.COPY.PHONE_ERROR);
+      } else {
+        clearPhoneError();
+      }
+      syncSubmit();
+    });
+
+    document.getElementById('code').addEventListener('input', function (e) {
+      state = D.setCode(state, e.target.value);
+      syncSubmit();
+    });
+
+    document.getElementById('send-code').addEventListener('click', sendCode);
+  }
+
   function init() {
     renderPoster();
     renderRegister();
+    bindEvents();
+    syncSubmit();
     render();
   }
 

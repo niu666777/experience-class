@@ -27,6 +27,16 @@ function goto(dom, hash) {
   return dom.window.document;
 }
 
+function fireInput(d, el, value) {
+  el.value = value;
+  el.dispatchEvent(new d.defaultView.Event('input', { bubbles: true }));
+}
+
+function fireChange(d, el, value) {
+  el.value = value;
+  el.dispatchEvent(new d.defaultView.Event('change', { bubbles: true }));
+}
+
 test('海报页渲染三个模块与立即报名按钮', () => {
   const dom = loadApp();
   const d = dom.window.document;
@@ -103,4 +113,68 @@ test('手机号与验证码输入框占位和长度限制正确', () => {
   assert.equal(phone.getAttribute('placeholder'), '12345678910');
   assert.equal(phone.getAttribute('maxlength'), '11');
   assert.equal(d.getElementById('code').getAttribute('maxlength'), '4');
+});
+
+test('手机号非法时显示错误提示，合法时清除', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  const phone = d.getElementById('phone');
+  fireInput(d, phone, '120');
+  assert.equal(d.getElementById('phone-error').textContent, '请填写正确手机号');
+  fireInput(d, phone, '13800138000');
+  assert.equal(d.getElementById('phone-error').textContent, '');
+});
+
+test('非法手机号点击发送验证码不启动倒计时', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  fireInput(d, d.getElementById('phone'), '120');
+  d.getElementById('send-code').click();
+  assert.equal(d.getElementById('send-code').textContent, '发送验证码');
+  assert.equal(d.getElementById('send-code').disabled, false);
+  assert.equal(d.getElementById('phone-error').textContent, '请填写正确手机号');
+});
+
+test('合法手机号点击发送验证码后按钮进入倒计时', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  fireInput(d, d.getElementById('phone'), '13800138000');
+  d.getElementById('send-code').click();
+  const btn = d.getElementById('send-code');
+  assert.equal(btn.disabled, true);
+  assert.equal(btn.textContent, '请60s后重试');
+  dom.window.close();
+});
+
+test('所有必填项填写完成后立即报名启用', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  const submit = d.getElementById('submit');
+  assert.equal(submit.disabled, true);
+
+  fireInput(d, d.querySelector('#parent-rows .parent-name'), '张三');
+  fireInput(d, d.querySelector('#child-rows .child-name'), '小明');
+  fireChange(d, d.querySelector('#child-rows .child-grade'), '小学三年级');
+  const opt = d.querySelector('#course-menu .course-option[value="语文"]');
+  opt.checked = true;
+  opt.dispatchEvent(new d.defaultView.Event('change', { bubbles: true }));
+  fireInput(d, d.getElementById('phone'), '13800138000');
+  fireInput(d, d.getElementById('code'), '1234');
+  assert.equal(submit.disabled, false);
+});
+
+test('添加孩子会追加一个带年级下拉的行', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  d.getElementById('add-child').click();
+  assert.equal(d.querySelectorAll('#child-rows .row').length, 2);
+  assert.equal(d.querySelectorAll('#child-rows .child-grade').length, 2);
+});
+
+test('删光孩子后提交保持禁用', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  d.querySelector('#child-rows .row-del').click();
+  assert.equal(d.querySelectorAll('#child-rows .row').length, 0);
+  assert.equal(d.getElementById('submit').disabled, true);
 });
