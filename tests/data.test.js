@@ -38,10 +38,13 @@ test('TEACHERS 有 3 项且前两位老师信息正确', () => {
 test('COPY 关键文案与常量正确', () => {
   assert.equal(data.COPY.PHONE_PLACEHOLDER, '12345678910');
   assert.equal(data.COPY.PHONE_ERROR, '请填写正确手机号');
+  assert.equal(data.COPY.CODE_HINT, '请写出正确的四位数字验证码');
+  assert.equal(data.COPY.CODE_ERROR, '请填写正确的验证码');
   assert.equal(data.COPY.COUNTDOWN_SECONDS, 60);
-  assert.equal(data.COPY.RESULT_RED_TEXT, '信息已收到，报名结果将在24h内通过电话或短信通知');
+  assert.equal(data.COPY.RESULT_RED_TEXT, '信息已收到\n报名结果将在24小时内通过电话或短信通知');
   assert.equal(data.COPY.DETAIL_PLACEHOLDER, '内容待更新');
   assert.equal(data.COPY.KNOWN_TEXT, '报名结束，请耐心等待通知');
   assert.equal(data.COPY.UNKNOWN_TEXT, '请添加课程微信详细了解或耐心等待电话回访');
-  assert.equal(data.COPY.VIDEO_PLACEHOLDER, '往期家长或学生的视频');
+  assert.equal(data.COPY.VIDEO_PLACEHOLDER, '往期家长或学生的课程或采访视频');
+  assert.equal(data.COPY.WECHAT_LINE, '若需第一时间确定报名结果或了解详情请添加课程微信：12345678910');
 });

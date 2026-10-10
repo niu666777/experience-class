@@ -145,6 +145,7 @@
   function renderResult() {
     document.getElementById('result-red').textContent = D.COPY.RESULT_RED_TEXT;
     document.getElementById('video-placeholder').textContent = D.COPY.VIDEO_PLACEHOLDER;
+    document.getElementById('wechat-line').textContent = D.COPY.WECHAT_LINE;
   }
 
   var countdown = null;
@@ -268,6 +269,12 @@
 
     document.getElementById('code').addEventListener('input', function (e) {
       state = D.setCode(state, e.target.value);
+      var codeError = document.getElementById('code-error');
+      if (e.target.value !== '' && !D.isValidCode(e.target.value)) {
+        codeError.textContent = D.COPY.CODE_ERROR;
+      } else {
+        codeError.textContent = '';
+      }
       syncSubmit();
     });
 

@@ -58,16 +58,19 @@
   const COPY = {
     PHONE_PLACEHOLDER: '12345678910',
     PHONE_ERROR: '请填写正确手机号',
+    CODE_HINT: '请写出正确的四位数字验证码',
+    CODE_ERROR: '请填写正确的验证码',
     CODE_LENGTH: 4,
     COUNTDOWN_SECONDS: 60,
     SEND_CODE_LABEL: '发送验证码',
     SUBMIT_LABEL: '立即报名',
     SUBMITTING_LABEL: '正在提交…',
-    RESULT_RED_TEXT: '信息已收到，报名结果将在24h内通过电话或短信通知',
+    RESULT_RED_TEXT: '信息已收到\n报名结果将在24小时内通过电话或短信通知',
     DETAIL_PLACEHOLDER: '内容待更新',
     KNOWN_TEXT: '报名结束，请耐心等待通知',
     UNKNOWN_TEXT: '请添加课程微信详细了解或耐心等待电话回访',
-    VIDEO_PLACEHOLDER: '往期家长或学生的视频',
+    VIDEO_PLACEHOLDER: '往期家长或学生的课程或采访视频',
+    WECHAT_LINE: '若需第一时间确定报名结果或了解详情请添加课程微信：12345678910',
     IMAGE_PLACEHOLDER: '图片'
   };
 

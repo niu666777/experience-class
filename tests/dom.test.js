@@ -183,8 +183,9 @@ test('结果页展示红字提示与视频占位', () => {
   const dom = loadApp();
   const d = goto(dom, '#/result');
   assert.ok(d.getElementById('view-result').classList.contains('active'));
-  assert.equal(d.getElementById('result-red').textContent, '信息已收到，报名结果将在24h内通过电话或短信通知');
-  assert.equal(d.getElementById('video-placeholder').textContent, '往期家长或学生的视频');
+  assert.equal(d.getElementById('result-red').textContent, '信息已收到\n报名结果将在24小时内通过电话或短信通知');
+  assert.equal(d.getElementById('video-placeholder').textContent, '往期家长或学生的课程或采访视频');
+  assert.equal(d.getElementById('wechat-line').textContent, '若需第一时间确定报名结果或了解详情请添加课程微信：12345678910');
 });
 
 test('结果页按钮显示对应反馈文字', () => {
@@ -270,4 +271,35 @@ test('init 重复调用不会重复绑定事件', () => {
   const d = goto(dom, '#/register');
   d.getElementById('add-child').click();
   assert.equal(d.querySelectorAll('#child-rows .row').length, 2);
+});
+
+test('验证码非四位数字时显示红字提醒', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  const code = d.getElementById('code');
+  fireInput(d, code, '12');
+  assert.equal(d.getElementById('code-error').textContent, '请填写正确的验证码');
+  fireInput(d, code, '1234');
+  assert.equal(d.getElementById('code-error').textContent, '');
+});
+
+test('验证码标签包含括号提示文案', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  const labels = Array.from(d.querySelectorAll('.form-label'));
+  const codeLabel = labels.find((l) => l.textContent.indexOf('验证码') !== -1);
+  assert.ok(codeLabel);
+  assert.ok(codeLabel.textContent.indexOf('请写出正确的四位数字验证码') !== -1);
+});
+
+test('发送验证码后倒计时逐秒递减', async () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  fireInput(d, d.getElementById('phone'), '13800138000');
+  d.getElementById('send-code').click();
+  const btn = d.getElementById('send-code');
+  assert.equal(btn.textContent, '请60s后重试');
+  await new Promise((resolve) => setTimeout(resolve, 1200));
+  assert.equal(btn.textContent, '请59s后重试');
+  dom.window.close();
 });
