@@ -42,11 +42,50 @@
     }
   }
 
+  var DETAIL_TITLES = {
+    course: '课程特色',
+    teachers: '师资力量',
+    works: '往期学员成果'
+  };
+
+  function currentRoute() {
+    var h = location.hash || '#/';
+    if (h.indexOf('#/detail/') === 0) {
+      var key = h.slice('#/detail/'.length);
+      return DETAIL_TITLES[key] ? { name: 'detail', key: key } : { name: 'poster' };
+    }
+    if (h === '#/register') { return { name: 'register' }; }
+    if (h === '#/result') { return { name: 'result' }; }
+    return { name: 'poster' };
+  }
+
+  function showView(name) {
+    var views = document.querySelectorAll('.view');
+    for (var i = 0; i < views.length; i += 1) {
+      views[i].classList.remove('active');
+    }
+    var el = document.getElementById('view-' + name);
+    if (el) { el.classList.add('active'); }
+  }
+
+  function render() {
+    var route = currentRoute();
+    if (route.name === 'detail') {
+      document.getElementById('detail-title').textContent = DETAIL_TITLES[route.key];
+      document.getElementById('detail-body').textContent = D.COPY.DETAIL_PLACEHOLDER;
+      showView('detail');
+    } else {
+      showView(route.name);
+    }
+  }
+
   function init() {
     renderPoster();
+    render();
   }
 
   window.App.init = init;
+  window.App.render = render;
 
   if (typeof document !== 'undefined' && document.readyState !== 'loading') {
     init();

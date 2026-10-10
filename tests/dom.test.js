@@ -21,6 +21,12 @@ function loadApp() {
   return dom;
 }
 
+function goto(dom, hash) {
+  dom.window.location.hash = hash;
+  dom.window.App.render();
+  return dom.window.document;
+}
+
 test('海报页渲染三个模块与立即报名按钮', () => {
   const dom = loadApp();
   const d = dom.window.document;
@@ -40,4 +46,31 @@ test('海报页教师卡展示照片占位与院校姓名', () => {
   assert.equal(first.querySelector('.teacher-photo').textContent.trim(), '图片');
   assert.equal(first.querySelector('.teacher-name').textContent.trim(), '尹广洋');
   assert.equal(first.querySelector('.teacher-school').textContent.trim(), '天津大学');
+});
+
+test('详情页路由显示对应标题与占位内容', () => {
+  const dom = loadApp();
+  let d = goto(dom, '#/detail/course');
+  assert.ok(d.getElementById('view-detail').classList.contains('active'));
+  assert.equal(d.getElementById('detail-title').textContent, '课程特色');
+  assert.equal(d.getElementById('detail-body').textContent, '内容待更新');
+
+  d = goto(dom, '#/detail/teachers');
+  assert.equal(d.getElementById('detail-title').textContent, '师资力量');
+
+  d = goto(dom, '#/detail/works');
+  assert.equal(d.getElementById('detail-title').textContent, '往期学员成果');
+});
+
+test('未知 hash 回退到海报页', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/whatever');
+  assert.ok(d.getElementById('view-poster').classList.contains('active'));
+  assert.ok(!d.getElementById('view-detail').classList.contains('active'));
+});
+
+test('详情页返回链接指向海报', () => {
+  const dom = loadApp();
+  const d = dom.window.document;
+  assert.equal(d.querySelector('#view-detail .btn-back').getAttribute('href'), '#/');
 });

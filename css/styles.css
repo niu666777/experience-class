@@ -42,6 +42,40 @@ body {
   color: var(--blue-dark);
 }
 
+.detail-head {
+  position: relative;
+  text-align: center;
+}
+
+.btn-back {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 10px;
+  font-size: 15px;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--blue-dark);
+}
+
+.detail-body {
+  margin: 40px 0;
+  padding: 40px 16px;
+  text-align: center;
+  font-size: 16px;
+  color: var(--muted);
+  background: var(--card);
+  border: 1px dashed var(--blue-light);
+  border-radius: 16px;
+}
+
 .module-card {
   margin: 16px 0;
   padding: 16px;
