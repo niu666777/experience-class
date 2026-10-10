@@ -1,0 +1,8 @@
+{
+  "name": "experience-class-registration",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test tests/"
+  }
+}
