@@ -248,8 +248,10 @@ body {
 .wechat-line {
   margin: 0 0 16px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--blue);
+  white-space: pre-line;
 }
 
 .result-actions {

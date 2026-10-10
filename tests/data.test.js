@@ -46,5 +46,5 @@ test('COPY 关键文案与常量正确', () => {
   assert.equal(data.COPY.KNOWN_TEXT, '报名结束，请耐心等待通知');
   assert.equal(data.COPY.UNKNOWN_TEXT, '请添加课程微信详细了解或耐心等待电话回访');
   assert.equal(data.COPY.VIDEO_PLACEHOLDER, '往期家长或学生的课程或采访视频');
-  assert.equal(data.COPY.WECHAT_LINE, '若需第一时间确定报名结果或了解详情请添加课程微信：12345678910');
+  assert.equal(data.COPY.WECHAT_LINE, '若需第一时间确定报名结果或了解详情\n请添加课程微信：12345678910');
 });

@@ -185,7 +185,7 @@ test('结果页展示红字提示与视频占位', () => {
   assert.ok(d.getElementById('view-result').classList.contains('active'));
   assert.equal(d.getElementById('result-red').textContent, '信息已收到\n报名结果将在24小时内通过电话或短信通知');
   assert.equal(d.getElementById('video-placeholder').textContent, '往期家长或学生的课程或采访视频');
-  assert.equal(d.getElementById('wechat-line').textContent, '若需第一时间确定报名结果或了解详情请添加课程微信：12345678910');
+  assert.equal(d.getElementById('wechat-line').textContent, '若需第一时间确定报名结果或了解详情\n请添加课程微信：12345678910');
 });
 
 test('结果页按钮显示对应反馈文字', () => {
