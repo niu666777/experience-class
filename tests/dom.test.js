@@ -8,9 +8,9 @@ const { JSDOM } = require('jsdom');
 const ROOT = path.resolve(__dirname, '..');
 
 function loadApp() {
-  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const html = fs.readFileSync(path.join(ROOT, '体验课报名系统.html'), 'utf8');
   const dom = new JSDOM(html, {
-    url: 'file://' + path.join(ROOT, 'index.html'),
+    url: 'file://' + path.join(ROOT, '体验课报名系统.html'),
     runScripts: 'outside-only'
   });
   const win = dom.window;
@@ -258,7 +258,7 @@ test('全流程：海报→详情→返回→报名→提交→结果', async ()
 });
 
 test('页面具备移动端视口与响应式样式', () => {
-  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const html = fs.readFileSync(path.join(ROOT, '体验课报名系统.html'), 'utf8');
   assert.match(html, /name="viewport"/);
   const css = fs.readFileSync(path.join(ROOT, 'css', 'styles.css'), 'utf8');
   assert.match(css, /max-width:\s*640px/);
