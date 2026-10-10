@@ -208,7 +208,7 @@ body {
 
 .btn-code:disabled {
   background: #B8C4E0;
-  color: #FFFFFF;
+  color: #8A8F99;
   cursor: not-allowed;
 }
 
@@ -429,6 +429,7 @@ body {
 
 .btn-primary:disabled {
   background: #B8C4E0;
+  color: #8A8F99;
   cursor: not-allowed;
 }
 

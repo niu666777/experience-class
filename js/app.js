@@ -284,7 +284,11 @@
     });
   }
 
+  var initialized = false;
+
   function init() {
+    if (initialized) { return; }
+    initialized = true;
     renderPoster();
     renderRegister();
     renderResult();

@@ -263,3 +263,11 @@ test('页面具备移动端视口与响应式样式', () => {
   assert.match(css, /max-width:\s*640px/);
   assert.match(css, /@media\s*\(min-width:\s*768px\)/);
 });
+
+test('init 重复调用不会重复绑定事件', () => {
+  const dom = loadApp();
+  dom.window.App.init();
+  const d = goto(dom, '#/register');
+  d.getElementById('add-child').click();
+  assert.equal(d.querySelectorAll('#child-rows .row').length, 2);
+});
