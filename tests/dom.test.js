@@ -303,3 +303,26 @@ test('发送验证码后倒计时逐秒递减', async () => {
   assert.equal(btn.textContent, '请59s后重试');
   dom.window.close();
 });
+
+test('发送验证码后完整倒数到 1 并恢复可点击', () => {
+  const dom = loadApp();
+  const win = dom.window;
+  const d = goto(dom, '#/register');
+  fireInput(d, d.getElementById('phone'), '13800138000');
+
+  let tick = null;
+  win.setInterval = function (fn) { tick = fn; return 1; };
+  win.clearInterval = function () {};
+
+  d.getElementById('send-code').click();
+  const btn = d.getElementById('send-code');
+  assert.equal(btn.textContent, '请60s后重试');
+
+  for (let i = 0; i < 59; i += 1) { tick(); }
+  assert.equal(btn.textContent, '请1s后重试');
+
+  tick();
+  assert.equal(btn.textContent, '发送验证码');
+  assert.equal(btn.disabled, false);
+  dom.window.close();
+});

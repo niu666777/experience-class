@@ -277,11 +277,12 @@ body {
 
 .result-feedback {
   margin: 12px 0 24px;
-  padding: 14px;
+  padding: 16px;
   text-align: center;
-  font-size: 15px;
-  color: var(--ink);
-  background: var(--card);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--red);
+  background: #FDF0F0;
   border-radius: 12px;
 }
 

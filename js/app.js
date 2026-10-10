@@ -179,7 +179,9 @@
     btn.disabled = true;
     countdown = new D.Countdown({
       onTick: function (r) { btn.textContent = D.formatCountdownLabel(r); },
-      onDone: function () { btn.disabled = false; btn.textContent = D.COPY.SEND_CODE_LABEL; }
+      onDone: function () { btn.disabled = false; btn.textContent = D.COPY.SEND_CODE_LABEL; },
+      setIntervalFn: window.setInterval.bind(window),
+      clearIntervalFn: window.clearInterval.bind(window)
     });
     countdown.start(D.COPY.COUNTDOWN_SECONDS);
   }
