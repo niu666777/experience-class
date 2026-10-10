@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>体验课报名</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <section id="view-poster" class="view">
+      <header class="page-head">
+        <h1 class="site-title">XXX体验课</h1>
+      </header>
+
+      <section class="module-card">
+        <div class="module-head">
+          <h2 class="module-title">课程特色</h2>
+          <a class="link-more" href="#/detail/course">详细了解→</a>
+        </div>
+        <div class="feature-list" id="feature-list"></div>
+      </section>
+
+      <section class="module-card">
+        <div class="module-head">
+          <h2 class="module-title">师资力量</h2>
+          <a class="link-more" href="#/detail/teachers">详细了解→</a>
+        </div>
+        <div class="teacher-grid" id="teacher-grid"></div>
+      </section>
+
+      <section class="module-card">
+        <div class="module-head">
+          <h2 class="module-title">往期学员成果</h2>
+          <a class="link-more" href="#/detail/works">详细了解→</a>
+        </div>
+        <div class="work-grid" id="work-grid"></div>
+      </section>
+
+      <div class="cta-wrap">
+        <a class="btn-primary" href="#/register">立即报名</a>
+      </div>
+    </section>
+
+    <section id="view-detail" class="view">
+      <header class="page-head detail-head">
+        <a class="btn-back" href="#/">‹ 返回</a>
+        <h1 class="page-title" id="detail-title">课程特色</h1>
+      </header>
+      <div class="detail-body" id="detail-body">内容待更新</div>
+    </section>
+
+    <section id="view-register" class="view">
+      <header class="page-head detail-head">
+        <a class="btn-back" href="#/">‹ 返回</a>
+        <h1 class="page-title">体验课报名</h1>
+      </header>
+
+      <div class="form-group">
+        <label class="form-label">家长姓名</label>
+        <div id="parent-rows"></div>
+        <button type="button" class="btn-add" id="add-parent">添加家长</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">孩子姓名与年级</label>
+        <div id="child-rows"></div>
+        <button type="button" class="btn-add" id="add-child">添加孩子</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">感兴趣的课程</label>
+        <button type="button" class="course-select" id="course-select">请选择课程</button>
+        <div class="course-menu" id="course-menu"></div>
+        <div class="chips" id="course-chips"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">家长手机号</label>
+        <div class="phone-row">
+          <input type="text" inputmode="numeric" id="phone" placeholder="12345678910" maxlength="11" autocomplete="off">
+          <button type="button" class="btn-code" id="send-code">发送验证码</button>
+        </div>
+        <div class="field-error" id="phone-error"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">验证码（请写出正确的四位数字验证码）</label>
+        <input type="text" inputmode="numeric" id="code" placeholder="请输入4位验证码" maxlength="4" autocomplete="off">
+        <div class="field-error" id="code-error"></div>
+      </div>
+
+      <div class="cta-wrap">
+        <button type="button" class="btn-primary" id="submit" disabled>立即报名</button>
+      </div>
+    </section>
+
+    <section id="view-result" class="view">
+      <header class="page-head detail-head">
+        <h1 class="page-title">报名结果</h1>
+      </header>
+      <div class="result-red" id="result-red">信息已收到
+报名结果将在24小时内通过电话或短信通知</div>
+      <div class="video-placeholder" id="video-placeholder">往期家长或学生的课程或采访视频</div>
+      <div class="wechat-line" id="wechat-line">若需第一时间确定报名结果或了解详情请添加课程微信：12345678910</div>
+      <div class="result-actions">
+        <button type="button" class="btn-primary" id="btn-known">我已知悉</button>
+        <button type="button" class="btn-secondary" id="btn-unknown">未知悉</button>
+      </div>
+      <div class="result-feedback" id="result-feedback"></div>
+    </section>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/validate.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/form-state.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
