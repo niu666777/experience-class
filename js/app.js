@@ -76,6 +76,11 @@
       showView('detail');
     } else {
       showView(route.name);
+      if (route.name === 'register') {
+        var submitBtn = document.getElementById('submit');
+        submitBtn.textContent = D.COPY.SUBMIT_LABEL;
+        syncSubmit();
+      }
     }
   }
 
@@ -137,6 +142,11 @@
     renderCourseChips();
   }
 
+  function renderResult() {
+    document.getElementById('result-red').textContent = D.COPY.RESULT_RED_TEXT;
+    document.getElementById('video-placeholder').textContent = D.COPY.VIDEO_PLACEHOLDER;
+  }
+
   var countdown = null;
 
   function rowIndex(el) {
@@ -171,6 +181,16 @@
       onDone: function () { btn.disabled = false; btn.textContent = D.COPY.SEND_CODE_LABEL; }
     });
     countdown.start(D.COPY.COUNTDOWN_SECONDS);
+  }
+
+  function submit() {
+    var btn = document.getElementById('submit');
+    if (btn.disabled) { return; }
+    btn.disabled = true;
+    btn.textContent = D.COPY.SUBMITTING_LABEL;
+    setTimeout(function () {
+      location.hash = '#/result';
+    }, 500);
   }
 
   function bindEvents() {
@@ -252,14 +272,26 @@
     });
 
     document.getElementById('send-code').addEventListener('click', sendCode);
+
+    document.getElementById('submit').addEventListener('click', submit);
+
+    document.getElementById('btn-known').addEventListener('click', function () {
+      document.getElementById('result-feedback').textContent = D.COPY.KNOWN_TEXT;
+    });
+
+    document.getElementById('btn-unknown').addEventListener('click', function () {
+      document.getElementById('result-feedback').textContent = D.COPY.UNKNOWN_TEXT;
+    });
   }
 
   function init() {
     renderPoster();
     renderRegister();
+    renderResult();
     bindEvents();
     syncSubmit();
     render();
+    window.addEventListener('hashchange', render);
   }
 
   window.App.init = init;

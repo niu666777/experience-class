@@ -178,3 +178,43 @@ test('删光孩子后提交保持禁用', () => {
   assert.equal(d.querySelectorAll('#child-rows .row').length, 0);
   assert.equal(d.getElementById('submit').disabled, true);
 });
+
+test('结果页展示红字提示与视频占位', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/result');
+  assert.ok(d.getElementById('view-result').classList.contains('active'));
+  assert.equal(d.getElementById('result-red').textContent, '信息已收到，报名结果将在24h内通过电话或短信通知');
+  assert.equal(d.getElementById('video-placeholder').textContent, '往期家长或学生的视频');
+});
+
+test('结果页按钮显示对应反馈文字', () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/result');
+  d.getElementById('btn-known').click();
+  assert.equal(d.getElementById('result-feedback').textContent, '报名结束，请耐心等待通知');
+  d.getElementById('btn-unknown').click();
+  assert.equal(d.getElementById('result-feedback').textContent, '请添加课程微信详细了解或耐心等待电话回访');
+});
+
+test('提交后按钮变为正在提交并跳转结果页', async () => {
+  const dom = loadApp();
+  const d = goto(dom, '#/register');
+  fireInput(d, d.querySelector('#parent-rows .parent-name'), '张三');
+  fireInput(d, d.querySelector('#child-rows .child-name'), '小明');
+  fireChange(d, d.querySelector('#child-rows .child-grade'), '小学三年级');
+  const opt = d.querySelector('#course-menu .course-option[value="语文"]');
+  opt.checked = true;
+  opt.dispatchEvent(new d.defaultView.Event('change', { bubbles: true }));
+  fireInput(d, d.getElementById('phone'), '13800138000');
+  fireInput(d, d.getElementById('code'), '1234');
+
+  const submit = d.getElementById('submit');
+  assert.equal(submit.disabled, false);
+  submit.click();
+  assert.equal(submit.disabled, true);
+  assert.equal(submit.textContent, '正在提交…');
+
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  assert.ok(d.getElementById('view-result').classList.contains('active'));
+  dom.window.close();
+});
