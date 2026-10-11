@@ -692,3 +692,69 @@ body {
   .work-list { grid-template-columns: 1fr 1fr; }
   .feat-groups { grid-template-columns: repeat(4, 1fr); }
 }
+
+.module-title {
+  display: flex;
+  align-items: center;
+}
+
+.module-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
+  color: var(--blue);
+}
+
+.module-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.feature-icon svg {
+  width: 34px;
+  height: 32px;
+}
+
+.hero-students {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.hero-student {
+  width: 84px;
+}
+
+.hero-student svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.detail-art {
+  flex: 0 0 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-art svg {
+  width: 80px;
+  height: 62px;
+}
+
+.detail-block-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.detail-block-title h3 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--blue-dark);
+}
