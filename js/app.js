@@ -7,7 +7,7 @@
     if (featureList) {
       featureList.innerHTML = D.FEATURES.map(function (f) {
         return '<div class="feature-item">' +
-          '<div class="feature-icon">' + f.icon + '</div>' +
+          '<div class="feature-icon">' + D.featureArt(f.key) + '</div>' +
           '<div class="feature-body"><h3>' + esc(f.title) + '</h3><p>' + esc(f.text) + '</p></div>' +
           '</div>';
       }).join('');
@@ -33,11 +33,18 @@
     if (workGrid) {
       workGrid.innerHTML = D.WORKS.slice(0, 3).map(function (w) {
         return '<div class="work-card">' +
-          '<div class="work-photo">' + svgForWork(w.kind) + '</div>' +
+          '<div class="work-photo">' + D.workArt(w.kind) + '</div>' +
           '<div class="work-label">' + esc(w.title) + '</div>' +
           '</div>';
       }).join('');
     }
+  }
+
+  function renderHero() {
+    var boy = document.getElementById('hero-student-boy');
+    var girl = document.getElementById('hero-student-girl');
+    if (boy) { boy.innerHTML = D.studentBoy(); }
+    if (girl) { girl.innerHTML = D.studentGirl(); }
   }
 
   var DETAIL_TITLES = {
@@ -146,43 +153,6 @@
     document.getElementById('wechat-line').textContent = D.COPY.WECHAT_LINE;
   }
 
-  function svgForWork(kind) {
-    var svgs = {
-      math: '<svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" role="img">' +
-        '<rect x="18" y="10" width="68" height="66" rx="6" fill="#FFFFFF" stroke="#4E8EF7" stroke-width="3"/>' +
-        '<line x1="30" y1="28" x2="74" y2="28" stroke="#4E8EF7" stroke-width="2"/>' +
-        '<line x1="30" y1="40" x2="74" y2="40" stroke="#4E8EF7" stroke-width="2"/>' +
-        '<line x1="30" y1="52" x2="66" y2="52" stroke="#4E8EF7" stroke-width="2"/>' +
-        '<line x1="30" y1="62" x2="58" y2="62" stroke="#F2A93B" stroke-width="3"/>' +
-        '<rect x="94" y="12" width="10" height="58" rx="4" fill="#F2A93B"/>' +
-        '<polygon points="94,12 104,12 99,4" fill="#F7C873"/>' +
-        '</svg>',
-      science: '<svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" role="img">' +
-        '<path d="M52 14 L68 14 L68 40 L90 72 Q94 80 78 80 L42 80 Q26 80 30 72 L52 40 Z" fill="#D9F2E7" stroke="#4FBF8E" stroke-width="3"/>' +
-        '<rect x="50" y="6" width="20" height="10" rx="3" fill="#4FBF8E"/>' +
-        '<circle cx="50" cy="58" r="5" fill="#4FBF8E"/>' +
-        '<circle cx="64" cy="66" r="4" fill="#4FBF8E"/>' +
-        '<circle cx="72" cy="50" r="3" fill="#4FBF8E"/>' +
-        '</svg>',
-      art: '<svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" role="img">' +
-        '<ellipse cx="56" cy="54" rx="34" ry="27" fill="#FCE7C1" stroke="#F2A93B" stroke-width="3"/>' +
-        '<circle cx="42" cy="44" r="6" fill="#E45B5B"/>' +
-        '<circle cx="60" cy="38" r="6" fill="#4E8EF7"/>' +
-        '<circle cx="74" cy="52" r="6" fill="#4FBF8E"/>' +
-        '<circle cx="52" cy="64" r="6" fill="#8E6FE8"/>' +
-        '<rect x="88" y="28" width="10" height="50" rx="5" fill="#B78B5A" transform="rotate(30 93 53)"/>' +
-        '</svg>',
-      code: '<svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" role="img">' +
-        '<rect x="22" y="14" width="76" height="52" rx="7" fill="#FFFFFF" stroke="#8E6FE8" stroke-width="3"/>' +
-        '<path d="M40 28 L30 40 L40 52" fill="none" stroke="#8E6FE8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' +
-        '<path d="M80 28 L90 40 L80 52" fill="none" stroke="#8E6FE8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' +
-        '<line x1="55" y1="26" x2="65" y2="54" stroke="#F2A93B" stroke-width="4" stroke-linecap="round"/>' +
-        '<rect x="18" y="72" width="84" height="10" rx="5" fill="#8E6FE8"/>' +
-        '</svg>'
-    };
-    return svgs[kind] || svgs.math;
-  }
-
   function renderDetail(key) {
     var body = document.getElementById('detail-body');
     if (!body) { return; }
@@ -199,9 +169,11 @@
             return '<li>' + esc(p) + '</li>';
           }).join('') + '</ul>';
         }
-        return '<div class="detail-block">' +
-          '<div class="detail-block-head"><span class="detail-icon">' + f.icon + '</span><h3>' + esc(f.title) + '</h3></div>' +
-          '<p class="detail-subtitle">' + esc(f.subtitle) + '</p>' +
+        return '<div class="detail-block" style="border-left:6px solid ' + f.accent + '">' +
+          '<div class="detail-block-head">' +
+            '<span class="detail-art">' + D.featureArt(f.key) + '</span>' +
+            '<div class="detail-block-title"><h3>' + esc(f.title) + '</h3><p class="detail-subtitle">' + esc(f.subtitle) + '</p></div>' +
+          '</div>' +
           '<p class="detail-desc">' + esc(f.desc) + '</p>' +
           extra +
           '</div>';
@@ -220,7 +192,7 @@
     } else if (key === 'works') {
       body.innerHTML = '<div class="work-list">' + D.WORKS.map(function (w) {
         return '<div class="work-item">' +
-          '<div class="work-item-image">' + svgForWork(w.kind) + '</div>' +
+          '<div class="work-item-image">' + D.workArt(w.kind) + '</div>' +
           '<div class="work-item-body">' +
             '<div class="work-item-name">' + esc(w.name) + '</div>' +
             '<div class="work-item-title">' + esc(w.title) + '</div>' +
@@ -382,6 +354,7 @@
     if (initialized) { return; }
     initialized = true;
     renderPoster();
+    renderHero();
     renderRegister();
     renderResult();
     bindEvents();

@@ -44,7 +44,8 @@ test('TEACHERS 有 2 项且老师信息完整', () => {
 test('WORKS 有 4 项且字段完整', () => {
   assert.equal(data.WORKS.length, 4);
   assert.equal(data.WORKS[0].kind, 'math');
-  assert.equal(data.WORKS[0].title, '数学思维笔记');
+  assert.equal(data.WORKS[0].title, '数学成绩提升 24 分');
+  assert.ok(data.WORKS.some((w) => w.kind === 'english'));
   for (const w of data.WORKS) {
     assert.ok(w.name && w.title && w.desc && w.kind && w.color);
   }

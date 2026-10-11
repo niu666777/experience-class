@@ -14,7 +14,7 @@ function loadApp() {
     runScripts: 'outside-only'
   });
   const win = dom.window;
-  for (const f of ['js/data.js', 'js/validate.js', 'js/countdown.js', 'js/form-state.js', 'js/app.js']) {
+  for (const f of ['js/data.js', 'js/validate.js', 'js/countdown.js', 'js/form-state.js', 'js/illustrations.js', 'js/app.js']) {
     win.eval(fs.readFileSync(path.join(ROOT, f), 'utf8'));
   }
   win.App.init();
@@ -59,12 +59,23 @@ test('海报页教师卡展示照片与院校姓名', () => {
   assert.equal(first.querySelector('.teacher-school').textContent.trim(), '天津大学');
 });
 
+test('海报页使用卡通插画与无 emoji 的模块标题', () => {
+  const dom = loadApp();
+  const d = dom.window.document;
+  const titles = Array.from(d.querySelectorAll('.module-title')).map((t) => t.textContent.trim());
+  assert.deepEqual(titles, ['课程特色', '师资力量', '往期学员成果']);
+  assert.ok(d.getElementById('hero-student-boy').innerHTML.indexOf('<svg') !== -1);
+  assert.ok(d.getElementById('hero-student-girl').innerHTML.indexOf('<svg') !== -1);
+  assert.ok(d.querySelector('#feature-list .feature-icon svg'));
+});
+
 test('详情页显示各模块详细内容', () => {
   const dom = loadApp();
   let d = goto(dom, '#/detail/course');
   assert.ok(d.getElementById('view-detail').classList.contains('active'));
   assert.equal(d.getElementById('detail-title').textContent, '课程特色');
   assert.equal(d.querySelectorAll('#detail-body .detail-block').length, 3);
+  assert.equal(d.querySelectorAll('#detail-body .detail-block .detail-art svg').length, 3);
 
   d = goto(dom, '#/detail/teachers');
   assert.equal(d.getElementById('detail-title').textContent, '师资力量');
@@ -75,6 +86,7 @@ test('详情页显示各模块详细内容', () => {
   d = goto(dom, '#/detail/works');
   assert.equal(d.getElementById('detail-title').textContent, '往期学员成果');
   assert.equal(d.querySelectorAll('#detail-body .work-item').length, 4);
+  assert.equal(d.querySelectorAll('#detail-body .work-item-image svg').length, 4);
 });
 
 test('未知 hash 回退到海报页', () => {
