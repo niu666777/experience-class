@@ -156,7 +156,7 @@ body::before {
 .page-head {
   position: relative;
   margin: 16px 0 26px;
-  padding: 24px 16px 22px 34px;
+  padding: 24px 16px 22px 26px;
   isolation: isolate;
   overflow: hidden;
   background:
@@ -235,9 +235,9 @@ body::before {
 .hero-art {
   flex: 0 0 auto;
   display: block;
-  width: 128px;
+  width: 104px;
   height: auto;
-  margin: 0 -6px 0 -20px;
+  margin: 0 -6px 0 -30px;
   filter: drop-shadow(0 6px 0 rgba(78, 141, 232, 0.16));
 }
 
@@ -269,19 +269,26 @@ body::before {
   filter: drop-shadow(0 0 1px var(--blue-deep)) drop-shadow(0 1px 0 var(--blue-deep));
 }
 
-/* 超大粗犷手写涂鸦标题：两行错位，做出马克笔手写的堆叠感 */
+/* 超大粗犷手写涂鸦标题：两行错位 + 白字蓝描边贴纸 + 硬投影，做画面第一视觉焦点 */
 .site-title {
   position: relative;
   z-index: 2;
   margin: 0;
   font-family: var(--font-hand);
-  font-size: 35px;
+  font-size: 41px;
   font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: 2px;
-  color: var(--blue);
-  /* 手写体本身偏细，用描边加粗成“粗犷涂鸦”的厚度 */
-  -webkit-text-stroke: 1.5px var(--blue);
+  line-height: 1.1;
+  letter-spacing: 1px;
+  /* 白字 + 粗蓝描边：做成手绘贴纸，在浅蓝卡面上对比最强。
+     不要用 -webkit-text-stroke —— 它会吃掉手写体笔画内腔，
+     和白色投影叠在一起还会混出一圈脏灰。用八向实心投影替代。 */
+  color: #FFFFFF;
+  text-shadow:
+    3.4px 0 0 var(--blue-dark), -3.4px 0 0 var(--blue-dark),
+    0 3.4px 0 var(--blue-dark), 0 -3.4px 0 var(--blue-dark),
+    2.5px 2.5px 0 var(--blue-dark), -2.5px 2.5px 0 var(--blue-dark),
+    2.5px -2.5px 0 var(--blue-dark), -2.5px -2.5px 0 var(--blue-dark),
+    6px 7px 0 rgba(27, 60, 116, 0.28);
 }
 
 .site-title span { display: block; }
@@ -289,9 +296,7 @@ body::before {
 .title-l1 { transform: rotate(-1.2deg); }
 
 .title-l2 {
-  margin: 3px 0 0 12px;
-  color: var(--blue-dark);
-  -webkit-text-stroke-color: var(--blue-dark);
+  margin: 6px 0 0 12px;
   transform: rotate(1.4deg);
 }
 
@@ -743,55 +748,32 @@ body::before {
   box-shadow: 0 1px 0 rgba(27, 60, 116, 0.16);
 }
 
-/* 海报底部深色行动条（素材一/二底栏：点击【立即报名】……） */
+/* 海报底部深蓝通栏，里面只有一个「立即报名」 */
 .cta-bar {
   position: sticky;
   bottom: 0;
   z-index: 30;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
   margin: 30px calc(-1 * var(--gutter)) 0;
-  padding: 13px 12px 15px;
+  padding: 12px;
   background: var(--ink-bar);
-  border-radius: 10px 10px 0 0;
-  box-shadow: 0 -8px 24px rgba(11, 18, 32, 0.26);
-}
-
-.cta-text {
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
-  color: #FFFFFF;
-}
-
-.cta-pointer {
-  flex: 0 0 auto;
-  width: 19px;
-  height: 22px;
-  margin-left: 2px;
-  animation: nudge 1.5s ease-in-out infinite;
-}
-
-@keyframes nudge {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(4px); }
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -8px 24px rgba(27, 60, 116, 0.26);
 }
 
 .cta-bar .btn-primary {
-  flex: 0 0 auto;
-  display: inline-block;
-  width: auto;
-  padding: 8px 16px;
+  flex: 1 1 auto;
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
   font-family: var(--font-hand);
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   background: linear-gradient(180deg, #7FB2F2, #4E8DE8);
   color: #FFFFFF;
-  border-radius: 9px 7px 10px 8px / 7px 10px 8px 9px;
+  border-radius: 10px 8px 11px 9px / 8px 11px 9px 10px;
   box-shadow: 0 3px 0 #2A5498;
 }
 
@@ -1389,10 +1371,10 @@ body::before {
   .work-grid { grid-template-columns: repeat(3, 1fr); }
   .work-list { grid-template-columns: 1fr 1fr; }
   .feat-groups { grid-template-columns: repeat(4, 1fr); }
-  .cta-bar { justify-content: center; }
+  .cta-bar .btn-primary { font-size: 21px; }
 
-  .hero-art { width: 168px; }
-  .site-title { font-size: 42px; }
+  .hero-art { width: 178px; }
+  .site-title { font-size: 54px; }
   .hero-ribbon { font-size: 14px; letter-spacing: 1px; }
   .feature-icon { max-width: 220px; }
   .page-head { padding: 30px 26px 26px 40px; }
@@ -1401,7 +1383,6 @@ body::before {
 /* 尊重系统的“减少动态效果”设置 */
 @media (prefers-reduced-motion: reduce) {
   .view.active { animation: none; }
-  .cta-pointer { animation: none; }
   .btn-primary,
   .btn-secondary,
   .link-more,
