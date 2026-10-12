@@ -7,39 +7,41 @@
    ========================================================================== */
 
 :root {
-  /* —— 纸面 —— */
-  --paper: #FAFCFF;
-  --paper-line: rgba(126, 166, 226, 0.20);
+  /* —— 纸面：米白练习本内页 —— */
+  --paper: #FCFAF4;
+  --paper-line: rgba(146, 182, 228, 0.30);
   --card: #FFFFFF;
-  --line: #D8E5F8;
-  /* 手绘蓝墨线：素材一/二里卡片与插画框的描边色 */
-  --ink-line: #8FB6F2;
+  --line: #D9E8FA;
 
-  /* —— 蓝（主色） —— */
-  --blue: #2F6BFF;
-  --blue-light: #5C92FF;
-  --blue-dark: #1636A8;
-  --blue-deep: #0E2A6E;
-  --sky: #E8F2FF;
-  --sky-2: #CFE4FF;
+  /* —— 蓝（主色，马卡龙柔化） —— */
+  --blue: #4E8DE8;
+  --blue-light: #7FB2F2;
+  --blue-dark: #2A5498;
+  --blue-deep: #1B3C74;
+  --sky: #EAF4FF;
+  --sky-2: #CFE5FB;
+  /* 蓝墨描边：卡片与插画框的手绘轮廓 */
+  --ink-line: #A8C8F0;
 
-  /* —— 强调色 —— */
-  --red: #E02B32;
-  --coral: #FF6F61;
-  --coral-soft: #FFEDEA;
-  --orange: #FF8A2F;
-  --orange-deep: #C2570A;
-  --amber: #FFB52E;
-  --amber-soft: #FFF3DC;
-  --green: #2CC08B;
-  --green-soft: #E6F8F0;
-  --violet: #8B6CF6;
+  /* —— 暖色点缀 —— */
+  --red: #E0736F;
+  --coral: #FF9E80;
+  --coral-soft: #FFEFE9;
+  --orange: #F5A65B;
+  --orange-deep: #B96B21;
+  --amber: #FBD26A;
+  --amber-soft: #FFF6E0;
+  --green: #7FCBB8;
+  --green-soft: #E6F6F1;
+  --violet: #A99BE8;
+  /* 枝叶藤蔓 */
+  --leaf: #8ECFBE;
 
   /* —— 墨 —— */
-  --ink: #1E2430;
-  --ink-soft: #5F6B7C;
-  --muted: #7A8494;
-  --ink-bar: #1B2333;
+  --ink: #2C3E56;
+  --ink-soft: #63738A;
+  --muted: #8291A6;
+  --ink-bar: #1B3C74;
 
   /* —— 手绘常量 —— */
   --pen: 2.5px;
@@ -47,29 +49,46 @@
   --wobble: 18px 15px 20px 13px / 15px 20px 13px 18px;
   --wobble-lg: 26px 22px 30px 20px / 22px 30px 20px 26px;
   /* 偏移实心投影：贴纸/剪贴画的立体感 */
-  --stamp: 5px 6px 0 rgba(22, 54, 168, 0.12);
-  --stamp-sm: 3px 4px 0 rgba(22, 54, 168, 0.11);
-  --shadow: 0 12px 30px rgba(22, 54, 168, 0.10);
+  --stamp: 5px 6px 0 rgba(78, 141, 232, 0.10);
+  --stamp-sm: 3px 4px 0 rgba(78, 141, 232, 0.10);
+  --shadow: 0 12px 30px rgba(27, 60, 116, 0.10);
+
+  /* —— 字体 —— */
+  /* 标题：粗犷手写涂鸦艺术体（方正舒体，靠 text-stroke 加粗） */
+  --font-hand: "FZShuTi", "方正舒体", "STHupo", "华文琥珀", "Microsoft YaHei", sans-serif;
+  /* 正文：干净圆润手写体（幼圆 / 圆体） */
+  --font-round: "YouYuan", "幼圆", "Yuanti SC", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
 * { box-sizing: border-box; }
 
 html, body { margin: 0; padding: 0; }
 
-/* 方格纸底：整页的“手绘笔记本”基调 */
+/* 白色笔记本横线内页：整页的“手账练习本”基调 */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-round);
   color: var(--ink);
   background-color: var(--paper);
-  background-image:
-    linear-gradient(var(--paper-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
-  background-size: 28px 28px, 28px 28px;
-  background-position: -1px -1px, -1px -1px;
-  line-height: 1.6;
+  background-image: linear-gradient(var(--paper-line) 1px, transparent 1px);
+  background-size: 100% 30px;
+  background-position: 0 -1px;
+  line-height: 1.62;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* 彩铅/蜡笔纸张颗粒：整页叠一层极淡的噪点，做出手绘质感
+   注意：这里不能用 mix-blend-mode —— 与 fixed 全屏层叠加时会被渲染成
+   大面积同心圆环（headless 与部分 GPU 路径下必现），改成纯 alpha 叠加。 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)' opacity='0.09'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
 }
 
 #app {
@@ -83,13 +102,56 @@ body {
 .view { display: none; }
 .view.active { display: block; animation: fadeIn 0.28s ease; }
 
+/* —— 标题层级：统一粗犷手写涂鸦体 —— */
+.site-title,
+.module-title,
+.page-title,
+.hero-label,
+.feature-body h3,
+.detail-block-title h3,
+.teacher-name,
+.work-item-title,
+.result-feedback {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* —— 勾选框 ✅ 项目符号（素材里每个条目的统一标记） —— */
+.feat-points,
+.detail-teacher-section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.feat-points li,
+.detail-teacher-section li {
+  position: relative;
+  padding-left: 24px;
+}
+
+.feat-points li::before,
+.detail-teacher-section li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.42em;
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.6 8.6l3 3 6.1-6.8' fill='none' stroke='%234E8DE8' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px 12px no-repeat,
+    #FFFFFF;
+  box-shadow: inset 0 0 0 1.8px var(--blue);
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 /* ==========================================================================
-   海报页首屏 —— 素材一：白纸页面 + 左侧装订圈 + 蓝色手绘大标题
+   海报页首屏 —— 浅淡蓝天白云 + 蓝色手绘大标题
    ========================================================================== */
 .page-head {
   position: relative;
@@ -97,12 +159,16 @@ body {
   padding: 24px 16px 22px 34px;
   isolation: isolate;
   overflow: hidden;
-  background: #FFFFFF;
-  border-radius: 5px 20px 20px 5px;
+  background:
+    radial-gradient(circle at 16% 10%, #FFFFFF 0%, rgba(255, 255, 255, 0) 46%),
+    radial-gradient(circle at 88% 6%, #FFFFFF 0%, rgba(255, 255, 255, 0) 40%),
+    radial-gradient(circle at 50% 104%, #FFFFFF 0%, rgba(255, 255, 255, 0) 52%),
+    linear-gradient(172deg, #E7F3FF 0%, #F6FBFF 58%, #FFFFFF 100%);
+  border: 3px solid var(--blue);
+  border-radius: var(--wobble-lg);
   box-shadow:
-    0 1px 0 rgba(47, 107, 255, 0.16),
-    7px 9px 0 rgba(47, 107, 255, 0.09),
-    0 20px 42px rgba(22, 54, 168, 0.11);
+    6px 7px 0 rgba(78, 141, 232, 0.13),
+    0 20px 42px rgba(27, 60, 116, 0.10);
 }
 
 /* 左侧笔记本装订圈（素材一纸张左边缘的线圈） */
@@ -117,7 +183,7 @@ body {
   pointer-events: none;
 }
 
-/* 手绘涂鸦层：蓝墨线小涂鸦，散落在纸面上 */
+/* 手绘涂鸦层：只贴着画面四边点缀，不遮挡文字与插画 */
 .doodle-layer {
   position: absolute;
   inset: 0;
@@ -127,8 +193,12 @@ body {
 
 .doodle {
   position: absolute;
-  color: rgba(47, 107, 255, 0.34);
+  color: var(--blue);
+  opacity: 0.42;
 }
+
+/* 枝叶藤蔓用蓝绿色 */
+.doodle-leaf { color: var(--leaf); opacity: 0.9; }
 
 .doodle svg {
   display: block;
@@ -136,12 +206,18 @@ body {
   height: 100%;
 }
 
-.doodle-1 { top: 18px; right: 22px; width: 24px; height: 24px; transform: rotate(-12deg); }
-.doodle-2 { bottom: 96px; right: 8px; width: 32px; height: 22px; opacity: 0.75; }
-.doodle-3 { top: 74px; left: 40px; width: 15px; height: 15px; opacity: 0.7; }
-.doodle-4 { bottom: 96px; left: 22px; width: 28px; height: 28px; opacity: 0.6; transform: rotate(14deg); }
-.doodle-5 { bottom: 44px; right: 40px; width: 22px; height: 26px; opacity: 0.6; transform: rotate(-10deg); }
-.doodle-6 { top: 108px; right: 96px; width: 17px; height: 17px; opacity: 0.55; }
+/* 顶边两角 */
+.doodle-1 { top: 9px; left: 9px; width: 22px; height: 22px; transform: rotate(-12deg); }
+.doodle-2 { top: 9px; right: 12px; width: 21px; height: 21px; }
+/* 右侧上沿（避开人物） */
+.doodle-3 { top: 40px; right: 6px; width: 26px; height: 18px; opacity: 0.34; }
+/* 左边沿，与标题留出间距 */
+.doodle-4 { top: 42%; left: 3px; width: 24px; height: 24px; transform: rotate(14deg); }
+.doodle-5 { top: 62%; left: 2px; width: 20px; height: 24px; transform: rotate(-10deg); }
+.doodle-6 { bottom: 22%; right: 5px; width: 20px; height: 22px; transform: rotate(8deg); }
+/* 底部两角 */
+.doodle-7 { bottom: 7px; left: 6px; width: 22px; height: 24px; transform: rotate(-8deg); }
+.doodle-8 { bottom: 8px; right: 9px; width: 22px; height: 22px; transform: rotate(10deg); }
 
 /* 首屏主区：左文字 + 右卡通人物（叠压在标题上，对应素材一的主视觉） */
 .hero-main {
@@ -162,7 +238,7 @@ body {
   width: 128px;
   height: auto;
   margin: 0 -6px 0 -20px;
-  filter: drop-shadow(0 6px 0 rgba(47, 107, 255, 0.16));
+  filter: drop-shadow(0 6px 0 rgba(78, 141, 232, 0.16));
 }
 
 /* 蓝色手绘标签框 + 回形针（素材一左上角的标签） */
@@ -179,7 +255,7 @@ body {
   background: var(--blue);
   border: 2.5px solid var(--blue-deep);
   border-radius: 6px 9px 7px 10px / 9px 7px 10px 6px;
-  box-shadow: 3px 4px 0 rgba(14, 42, 110, 0.16);
+  box-shadow: 3px 4px 0 rgba(27, 60, 116, 0.16);
 }
 
 .hero-clip {
@@ -193,16 +269,19 @@ body {
   filter: drop-shadow(0 0 1px var(--blue-deep)) drop-shadow(0 1px 0 var(--blue-deep));
 }
 
-/* 超大蓝色手写标题：两行错位，做出马克笔手写的堆叠感 */
+/* 超大粗犷手写涂鸦标题：两行错位，做出马克笔手写的堆叠感 */
 .site-title {
   position: relative;
   z-index: 2;
   margin: 0;
-  font-size: 33px;
-  font-weight: 900;
-  line-height: 1.08;
-  letter-spacing: 1px;
+  font-family: var(--font-hand);
+  font-size: 35px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: 2px;
   color: var(--blue);
+  /* 手写体本身偏细，用描边加粗成“粗犷涂鸦”的厚度 */
+  -webkit-text-stroke: 1.5px var(--blue);
 }
 
 .site-title span { display: block; }
@@ -212,6 +291,7 @@ body {
 .title-l2 {
   margin: 3px 0 0 12px;
   color: var(--blue-dark);
+  -webkit-text-stroke-color: var(--blue-dark);
   transform: rotate(1.4deg);
 }
 
@@ -226,10 +306,10 @@ body {
   font-weight: 800;
   letter-spacing: 0.8px;
   color: #FFFFFF;
-  background: linear-gradient(180deg, #4C86FF, #2F6BFF);
+  background: linear-gradient(180deg, #7FB2F2, #4E8DE8);
   border: 2.5px solid var(--blue-deep);
   border-radius: 999px;
-  box-shadow: 3px 4px 0 rgba(14, 42, 110, 0.16);
+  box-shadow: 3px 4px 0 rgba(27, 60, 116, 0.16);
 }
 
 /* 缎带两端的斜角飘带 */
@@ -260,7 +340,7 @@ body {
   background: #FFFFFF;
   border: 2.5px solid var(--blue);
   border-radius: 14px 12px 16px 10px / 12px 16px 10px 14px;
-  box-shadow: 3px 4px 0 rgba(47, 107, 255, 0.12);
+  box-shadow: 3px 4px 0 rgba(78, 141, 232, 0.12);
 }
 
 .hero-facts li {
@@ -302,7 +382,7 @@ body {
   background: #FFFFFF;
   border: var(--pen) solid var(--ink-line);
   border-radius: var(--wobble);
-  box-shadow: 5px 6px 0 rgba(47, 107, 255, 0.10);
+  box-shadow: 5px 6px 0 rgba(78, 141, 232, 0.10);
 }
 
 /* 手绘胶带（贴右上角，避开左上角的模块标签） */
@@ -315,7 +395,7 @@ body {
   height: 18px;
   border-radius: 3px;
   transform: rotate(2.5deg);
-  box-shadow: 0 2px 5px rgba(14, 42, 110, 0.14);
+  box-shadow: 0 2px 5px rgba(27, 60, 116, 0.14);
   background:
     repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.5) 0 6px, transparent 6px 12px),
     var(--amber);
@@ -354,14 +434,17 @@ body {
   gap: 8px;
   margin: 0;
   padding: 7px 16px;
-  font-size: 17px;
-  font-weight: 900;
-  letter-spacing: 0.6px;
+  font-family: var(--font-hand);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 1px;
   color: #FFFFFF;
   background: var(--blue);
   border: 2.5px solid var(--blue-deep);
   border-radius: 13px 10px 14px 9px / 10px 14px 9px 13px;
-  box-shadow: 2px 3px 0 rgba(22, 54, 168, 0.22);
+  box-shadow: 2px 3px 0 rgba(27, 60, 116, 0.22);
+  /* 白字不能再用同色描边，否则字形会被"吃"成与底色一致而看不见 */
+  text-shadow: 0.7px 0 0 #FFFFFF, -0.7px 0 0 #FFFFFF;
 }
 
 .module-icon {
@@ -424,7 +507,7 @@ body {
   background: linear-gradient(160deg, #EFF6FF, #DCEAFF);
   border: 3px solid var(--blue);
   border-radius: var(--wobble);
-  box-shadow: 4px 5px 0 rgba(47, 107, 255, 0.14);
+  box-shadow: 4px 5px 0 rgba(78, 141, 232, 0.14);
 }
 
 .feature-icon img {
@@ -444,7 +527,7 @@ body {
   padding: 3px;
   background: rgba(255, 255, 255, 0.92);
   border-radius: 8px 6px 9px 5px / 6px 9px 5px 8px;
-  box-shadow: 0 1px 3px rgba(22, 54, 168, 0.18);
+  box-shadow: 0 1px 3px rgba(27, 60, 116, 0.18);
 }
 
 .feature-body { flex: 1 1 auto; min-width: 0; }
@@ -463,7 +546,7 @@ body {
   background: var(--blue);
   border: 2.5px solid var(--blue-deep);
   border-radius: 999px;
-  box-shadow: 2px 3px 0 rgba(22, 54, 168, 0.22);
+  box-shadow: 2px 3px 0 rgba(27, 60, 116, 0.22);
 }
 
 .feature-body h3::before {
@@ -522,7 +605,7 @@ body {
   display: block;
   border: 3px solid var(--blue);
   border-radius: var(--wobble);
-  box-shadow: 4px 5px 0 rgba(47, 107, 255, 0.14);
+  box-shadow: 4px 5px 0 rgba(78, 141, 232, 0.14);
 }
 
 .teacher-info { grid-area: info; min-width: 0; }
@@ -544,7 +627,7 @@ body {
   background: var(--blue);
   border: 1.5px solid var(--blue-deep);
   border-radius: 7px 6px 8px 5px / 6px 8px 5px 7px;
-  box-shadow: 2px 2px 0 rgba(22, 54, 168, 0.2);
+  box-shadow: 2px 2px 0 rgba(27, 60, 116, 0.2);
 }
 
 .teacher-honors {
@@ -571,7 +654,7 @@ body {
   background: #FFFFFF;
   border: 2.5px solid var(--blue);
   border-radius: 14px 12px 15px 11px / 12px 15px 11px 14px;
-  box-shadow: 4px 5px 0 rgba(47, 107, 255, 0.13);
+  box-shadow: 4px 5px 0 rgba(78, 141, 232, 0.13);
   overflow: hidden;
   transition: transform 0.18s ease;
 }
@@ -614,7 +697,7 @@ body {
   padding: 15px;
   border: none;
   border-radius: 999px;
-  background: linear-gradient(180deg, #5C92FF, #2F6BFF);
+  background: linear-gradient(180deg, #7FB2F2, #4E8DE8);
   color: #FFFFFF;
   font-size: 17px;
   font-weight: 900;
@@ -622,13 +705,13 @@ body {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 5px 0 #1B49C4, 0 12px 22px rgba(27, 73, 196, 0.26);
+  box-shadow: 0 5px 0 #2A5498, 0 12px 22px rgba(42, 84, 152, 0.26);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-primary:active {
   transform: translateY(3px);
-  box-shadow: 0 2px 0 #1B49C4, 0 6px 14px rgba(27, 73, 196, 0.22);
+  box-shadow: 0 2px 0 #2A5498, 0 6px 14px rgba(42, 84, 152, 0.22);
 }
 
 .btn-primary:disabled {
@@ -651,13 +734,13 @@ body {
   font-weight: 900;
   text-align: center;
   cursor: pointer;
-  box-shadow: 0 4px 0 rgba(14, 42, 110, 0.16);
+  box-shadow: 0 4px 0 rgba(27, 60, 116, 0.16);
   transition: transform 0.15s ease;
 }
 
 .btn-secondary:active {
   transform: translateY(3px);
-  box-shadow: 0 1px 0 rgba(14, 42, 110, 0.16);
+  box-shadow: 0 1px 0 rgba(27, 60, 116, 0.16);
 }
 
 /* 海报底部深色行动条（素材一/二底栏：点击【立即报名】……） */
@@ -702,17 +785,19 @@ body {
   display: inline-block;
   width: auto;
   padding: 8px 16px;
-  font-size: 15.5px;
-  letter-spacing: 0.5px;
-  background: linear-gradient(180deg, #5C92FF, #2F6BFF);
+  font-family: var(--font-hand);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  background: linear-gradient(180deg, #7FB2F2, #4E8DE8);
   color: #FFFFFF;
   border-radius: 9px 7px 10px 8px / 7px 10px 8px 9px;
-  box-shadow: 0 3px 0 #1B49C4;
+  box-shadow: 0 3px 0 #2A5498;
 }
 
 .cta-bar .btn-primary:active {
   transform: translateY(2px);
-  box-shadow: 0 1px 0 #1B49C4;
+  box-shadow: 0 1px 0 #2A5498;
 }
 
 /* ==========================================================================
@@ -728,7 +813,7 @@ body {
   background: #FFFFFF;
   border: 3px solid var(--blue);
   border-radius: 22px 18px 24px 16px / 18px 24px 16px 22px;
-  box-shadow: 5px 6px 0 rgba(47, 107, 255, 0.12);
+  box-shadow: 5px 6px 0 rgba(78, 141, 232, 0.12);
 }
 
 .btn-back {
@@ -868,7 +953,7 @@ body {
   object-fit: cover;
   border: 3px solid #FFFFFF;
   border-radius: 14px;
-  box-shadow: 0 0 0 2px var(--sky-2), 4px 5px 0 rgba(22, 54, 168, 0.14);
+  box-shadow: 0 0 0 2px var(--sky-2), 4px 5px 0 rgba(27, 60, 116, 0.14);
 }
 
 .detail-teacher-main { flex: 1; min-width: 0; }
@@ -886,7 +971,7 @@ body {
   font-size: 12px;
   font-weight: 800;
   color: #FFFFFF;
-  background: linear-gradient(180deg, #4C86FF, #2F6BFF);
+  background: linear-gradient(180deg, #7FB2F2, #4E8DE8);
   border: 1.5px solid var(--blue-deep);
   border-radius: 7px;
   vertical-align: middle;
@@ -1004,10 +1089,10 @@ body {
   font-weight: 900;
   letter-spacing: 0.3px;
   color: #FFFFFF;
-  background: linear-gradient(180deg, #4C86FF, #2F6BFF);
+  background: linear-gradient(180deg, #7FB2F2, #4E8DE8);
   border: 2px solid var(--blue-deep);
   border-radius: 999px;
-  box-shadow: 2px 3px 0 rgba(22, 54, 168, 0.22);
+  box-shadow: 2px 3px 0 rgba(27, 60, 116, 0.22);
 }
 
 .form-label::before {
@@ -1048,7 +1133,7 @@ body {
 .form-group > input:focus {
   outline: none;
   border-color: var(--blue);
-  box-shadow: 0 0 0 4px rgba(47, 107, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(78, 141, 232, 0.15);
 }
 
 .row select {
@@ -1174,7 +1259,7 @@ body {
   font-size: 13.5px;
   font-weight: 800;
   color: #FFFFFF;
-  background: linear-gradient(180deg, #4C86FF, #2F6BFF);
+  background: linear-gradient(180deg, #7FB2F2, #4E8DE8);
   border: 2px solid var(--blue-deep);
   border-radius: 12px;
   cursor: pointer;
@@ -1296,7 +1381,7 @@ body {
     background: rgba(255, 255, 255, 0.88);
     border-left: 3px solid #FFD3DA;
     border-right: 1px solid var(--line);
-    box-shadow: 0 24px 70px rgba(22, 54, 168, 0.14);
+    box-shadow: 0 24px 70px rgba(27, 60, 116, 0.14);
     padding: 0 var(--gutter) 56px;
   }
 
