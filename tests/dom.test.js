@@ -59,14 +59,14 @@ test('海报页教师卡展示照片与院校姓名', () => {
   assert.equal(first.querySelector('.teacher-school').textContent.trim(), '天津大学');
 });
 
-test('海报页使用卡通插画与无 emoji 的模块标题', () => {
+test('海报页模块标题无 emoji 且不再渲染学生形象', () => {
   const dom = loadApp();
   const d = dom.window.document;
   const titles = Array.from(d.querySelectorAll('.module-title')).map((t) => t.textContent.trim());
   assert.deepEqual(titles, ['课程特色', '师资力量', '往期学员成果']);
-  assert.ok(d.getElementById('hero-student-boy').innerHTML.indexOf('<svg') !== -1);
-  assert.ok(d.getElementById('hero-student-girl').innerHTML.indexOf('<svg') !== -1);
   assert.ok(d.querySelector('#feature-list .feature-icon svg'));
+  assert.equal(d.getElementById('hero-student-boy'), null);
+  assert.equal(d.getElementById('hero-student-girl'), null);
 });
 
 test('详情页显示各模块详细内容', () => {
