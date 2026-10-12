@@ -7,7 +7,7 @@
     if (featureList) {
       featureList.innerHTML = D.FEATURES.map(function (f) {
         return '<div class="feature-item">' +
-          '<div class="feature-icon">' + D.featureArt(f.key) + '</div>' +
+          '<div class="feature-icon">' + D.featureCard(f.key) + '</div>' +
           '<div class="feature-body"><h3>' + esc(f.title) + '</h3><p>' + esc(f.text) + '</p></div>' +
           '</div>';
       }).join('');

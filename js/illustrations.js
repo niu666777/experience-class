@@ -36,5 +36,25 @@
     return art[key] || art.subjects;
   }
 
-  return { featureArt };
+  // 课程特色的卡通配图（3:2，与插画框比例一致）
+  var PHOTOS = {
+    subjects: 'images/feature-subjects.png',
+    feedback: 'images/feature-feedback.png',
+    continue: 'images/feature-continue.png'
+  };
+
+  var PHOTO_ALT = {
+    subjects: '举着双手的小朋友，周围环绕着书本、地球仪、火箭、画笔、足球等学科道具',
+    feedback: '老师举着学情反馈单向孩子和家长讲解，桌上摊开课本',
+    continue: '课后孩子在家书桌前写作业，家长站在身后陪伴'
+  };
+
+  // 首屏插画框：大配图 + 右下角小图标印章
+  function featureCard(key) {
+    var photo = PHOTOS[key] || PHOTOS.subjects;
+    var alt = PHOTO_ALT[key] || '';
+    return '<img src="' + photo + '" alt="' + alt + '" width="480" height="320">' + featureArt(key);
+  }
+
+  return { featureArt: featureArt, featureCard: featureCard };
 });
