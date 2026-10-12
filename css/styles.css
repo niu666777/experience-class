@@ -137,25 +137,6 @@ body {
   color: #EAF2FF;
 }
 
-.hero-students {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.hero-student {
-  width: 110px;
-  filter: drop-shadow(0 8px 14px rgba(13, 42, 125, 0.28));
-}
-
-.hero-student svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 /* ---------- 模块卡片 ---------- */
 .module-card {
   position: relative;
@@ -891,5 +872,4 @@ body {
   .work-grid { grid-template-columns: repeat(3, 1fr); }
   .work-list { grid-template-columns: 1fr 1fr; }
   .feat-groups { grid-template-columns: repeat(4, 1fr); }
-  .hero-student { width: 140px; }
 }

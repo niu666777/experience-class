@@ -40,13 +40,6 @@
     }
   }
 
-  function renderHero() {
-    var boy = document.getElementById('hero-student-boy');
-    var girl = document.getElementById('hero-student-girl');
-    if (boy) { boy.innerHTML = D.studentBoy(); }
-    if (girl) { girl.innerHTML = D.studentGirl(); }
-  }
-
   var DETAIL_TITLES = {
     course: '课程特色',
     teachers: '师资力量',
@@ -354,7 +347,6 @@
     if (initialized) { return; }
     initialized = true;
     renderPoster();
-    renderHero();
     renderRegister();
     renderResult();
     bindEvents();

@@ -4,97 +4,6 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  function studentBoy() {
-    return '<svg viewBox="0 0 160 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="漫画风男同学">'
-      + '<defs>'
-      + '<linearGradient id="boySkin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7CD"/><stop offset="1" stop-color="#F6C7A0"/></linearGradient>'
-      + '<linearGradient id="boyHair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#485A83"/><stop offset="1" stop-color="#26314E"/></linearGradient>'
-      + '<linearGradient id="boyBlazer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A7EC0"/><stop offset="1" stop-color="#35507D"/></linearGradient>'
-      + '</defs>'
-      + '<g stroke="#242238" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">'
-      + '<path d="M50 36 Q44 10 80 8 Q116 10 110 36 Q108 24 80 24 Q52 24 50 36 Z" fill="url(#boyHair)"/>'
-      + '<path d="M62 148 L60 186 Q60 192 68 192 L78 192 L78 148 Z" fill="#2F3B58"/>'
-      + '<path d="M98 148 L100 186 Q100 192 92 192 L82 192 L82 148 Z" fill="#2F3B58"/>'
-      + '<path d="M58 190 Q52 196 58 202 L82 202 L82 194 Z" fill="#F2F5FA"/>'
-      + '<path d="M102 190 Q108 196 102 202 L78 202 L78 194 Z" fill="#F2F5FA"/>'
-      + '<path d="M46 112 Q32 126 34 146 Q35 152 42 152 L48 150 L48 126 Q48 118 52 112 Z" fill="url(#boyBlazer)"/>'
-      + '<path d="M114 112 Q128 126 126 146 Q125 152 118 152 L112 150 L112 126 Q112 118 108 112 Z" fill="url(#boyBlazer)"/>'
-      + '<circle cx="44" cy="153" r="7" fill="url(#boySkin)"/>'
-      + '<circle cx="116" cy="153" r="7" fill="url(#boySkin)"/>'
-      + '<path d="M68 100 L80 126 L92 100 Z" fill="#FFFFFF"/>'
-      + '<path d="M46 112 Q34 124 36 142 L48 140 Z" fill="#FFFFFF"/>'
-      + '<path d="M114 112 Q126 124 124 142 L112 140 Z" fill="#FFFFFF"/>'
-      + '<path d="M48 104 Q48 96 62 96 L80 96 L80 152 L58 152 Q48 152 48 140 Z" fill="url(#boyBlazer)"/>'
-      + '<path d="M112 104 Q112 96 98 96 L80 96 L80 152 L102 152 Q112 152 112 140 Z" fill="url(#boyBlazer)"/>'
-      + '<path d="M76 100 L84 100 L82 110 L78 122 L76 110 Z" fill="#E85D75"/>'
-      + '<path d="M78 122 L82 122 L84 134 L76 134 Z" fill="#E85D75"/>'
-      + '<path d="M72 82 L88 82 L88 98 L72 98 Z" fill="url(#boySkin)"/>'
-      + '<path d="M50 44 Q50 12 80 12 Q110 12 110 44 Q110 66 94 78 Q82 86 66 78 Q50 66 50 44 Z" fill="url(#boySkin)"/>'
-      + '<path d="M50 40 Q44 14 62 10 Q56 24 58 34 Q52 28 50 40 Z" fill="url(#boyHair)"/>'
-      + '<path d="M72 6 Q88 4 96 8 Q90 20 88 30 Q82 16 72 6 Z" fill="url(#boyHair)"/>'
-      + '<path d="M100 8 Q116 14 110 40 Q104 26 100 32 Q102 20 100 8 Z" fill="url(#boyHair)"/>'
-      + '<path d="M56 48 Q64 44 72 48" fill="none" stroke="#242238" stroke-width="3"/>'
-      + '<path d="M88 48 Q96 44 104 48" fill="none" stroke="#242238" stroke-width="3"/>'
-      + '<path d="M56 54 Q64 48 72 54 Q72 68 64 70 Q56 68 56 54 Z" fill="#FFFFFF" stroke-width="2.5"/>'
-      + '<circle cx="64" cy="59" r="5" fill="#38415E"/>'
-      + '<circle cx="65.5" cy="57" r="2" fill="#FFFFFF"/>'
-      + '<path d="M88 54 Q96 48 104 54 Q104 68 96 70 Q88 68 88 54 Z" fill="#FFFFFF" stroke-width="2.5"/>'
-      + '<circle cx="96" cy="59" r="5" fill="#38415E"/>'
-      + '<circle cx="97.5" cy="57" r="2" fill="#FFFFFF"/>'
-      + '<path d="M78 66 L82 66" stroke-width="2"/>'
-      + '<path d="M72 76 Q80 82 88 76" fill="none" stroke-width="2.5"/>'
-      + '<ellipse cx="54" cy="68" rx="4" ry="2.5" fill="#F8B7A0" opacity="0.7"/>'
-      + '<ellipse cx="106" cy="68" rx="4" ry="2.5" fill="#F8B7A0" opacity="0.7"/>'
-      + '</g>'
-      + '</svg>';
-  }
-
-  function studentGirl() {
-    return '<svg viewBox="0 0 160 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="漫画风女同学">'
-      + '<defs>'
-      + '<linearGradient id="girlSkin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7CD"/><stop offset="1" stop-color="#F6C7A0"/></linearGradient>'
-      + '<linearGradient id="girlHair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8B6547"/><stop offset="1" stop-color="#5F412E"/></linearGradient>'
-      + '<linearGradient id="girlBlazer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6F8FC8"/><stop offset="1" stop-color="#3D5A80"/></linearGradient>'
-      + '</defs>'
-      + '<g stroke="#242238" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">'
-      + '<path d="M46 38 Q40 14 80 12 Q120 14 114 38 Q124 74 116 120 Q112 140 102 144 Q98 120 94 92 Q88 116 80 118 Q72 116 66 92 Q62 120 58 144 Q48 140 44 120 Q36 74 46 38 Z" fill="url(#girlHair)"/>'
-      + '<path d="M62 148 L60 186 Q60 192 68 192 L78 192 L78 148 Z" fill="#2F3B58"/>'
-      + '<path d="M98 148 L100 186 Q100 192 92 192 L82 192 L82 148 Z" fill="#2F3B58"/>'
-      + '<path d="M58 190 Q52 196 58 202 L82 202 L82 194 Z" fill="#F2F5FA"/>'
-      + '<path d="M102 190 Q108 196 102 202 L78 202 L78 194 Z" fill="#F2F5FA"/>'
-      + '<path d="M46 112 Q32 126 34 146 Q35 152 42 152 L48 150 L48 126 Q48 118 52 112 Z" fill="url(#girlBlazer)"/>'
-      + '<path d="M114 112 Q128 126 126 146 Q125 152 118 152 L112 150 L112 126 Q112 118 108 112 Z" fill="url(#girlBlazer)"/>'
-      + '<circle cx="44" cy="153" r="7" fill="url(#girlSkin)"/>'
-      + '<circle cx="116" cy="153" r="7" fill="url(#girlSkin)"/>'
-      + '<path d="M70 100 L80 126 L90 100 Z" fill="#FFFFFF"/>'
-      + '<path d="M48 104 Q48 96 62 96 L80 96 L80 152 L58 152 Q48 152 48 140 Z" fill="url(#girlBlazer)"/>'
-      + '<path d="M112 104 Q112 96 98 96 L80 96 L80 152 L102 152 Q112 152 112 140 Z" fill="url(#girlBlazer)"/>'
-      + '<path d="M74 102 L86 102 L84 110 L80 106 L76 110 Z" fill="#E85D75"/>'
-      + '<path d="M72 82 L88 82 L88 98 L72 98 Z" fill="url(#girlSkin)"/>'
-      + '<path d="M50 44 Q50 12 80 12 Q110 12 110 44 Q110 66 94 78 Q82 86 66 78 Q50 66 50 44 Z" fill="url(#girlSkin)"/>'
-      + '<path d="M48 42 Q46 14 80 12 Q114 14 112 42 Q108 26 96 30 Q90 18 80 20 Q70 18 64 30 Q52 26 48 42 Z" fill="url(#girlHair)"/>'
-      + '<path d="M46 38 Q48 60 58 76 Q50 56 46 38 Z" fill="url(#girlHair)"/>'
-      + '<path d="M114 38 Q112 60 102 76 Q110 56 114 38 Z" fill="url(#girlHair)"/>'
-      + '<path d="M56 48 Q64 45 72 48" fill="none" stroke="#242238" stroke-width="2.5"/>'
-      + '<path d="M88 48 Q96 45 104 48" fill="none" stroke="#242238" stroke-width="2.5"/>'
-      + '<path d="M56 53 Q64 46 72 53 Q72 68 64 71 Q56 68 56 53 Z" fill="#FFFFFF" stroke-width="2.5"/>'
-      + '<circle cx="64" cy="59" r="5.5" fill="#38415E"/>'
-      + '<circle cx="65.5" cy="56.5" r="2" fill="#FFFFFF"/>'
-      + '<circle cx="62.5" cy="62" r="1.2" fill="#FFFFFF"/>'
-      + '<path d="M52 51 L56 53" stroke-width="2"/>'
-      + '<path d="M88 53 Q96 46 104 53 Q104 68 96 71 Q88 68 88 53 Z" fill="#FFFFFF" stroke-width="2.5"/>'
-      + '<circle cx="96" cy="59" r="5.5" fill="#38415E"/>'
-      + '<circle cx="97.5" cy="56.5" r="2" fill="#FFFFFF"/>'
-      + '<circle cx="94.5" cy="62" r="1.2" fill="#FFFFFF"/>'
-      + '<path d="M104 51 L108 53" stroke-width="2"/>'
-      + '<path d="M78 66 L82 66" stroke-width="2"/>'
-      + '<path d="M73 76 Q80 81 87 76" fill="none" stroke-width="2.5"/>'
-      + '<ellipse cx="54" cy="68" rx="4.5" ry="3" fill="#F8B7A0" opacity="0.75"/>'
-      + '<ellipse cx="106" cy="68" rx="4.5" ry="3" fill="#F8B7A0" opacity="0.75"/>'
-      + '</g>'
-      + '</svg>';
-  }
-
   function featureArt(key) {
     var art = {
       subjects: '<svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="多学科">'
@@ -127,5 +36,5 @@
     return art[key] || art.subjects;
   }
 
-  return { studentBoy, studentGirl, featureArt };
+  return { featureArt };
 });
