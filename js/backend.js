@@ -61,10 +61,10 @@
     if (!f || !cfg.SUPABASE_URL || !cfg.SUPABASE_ANON_KEY || !id) {
       return Promise.resolve({ skipped: true });
     }
-    return f(cfg.SUPABASE_URL + '/rest/v1/registrations?id=eq.' + encodeURIComponent(id), {
-      method: 'PATCH',
+    return f(cfg.SUPABASE_URL + '/rest/v1/rpc/set_result_choice', {
+      method: 'POST',
       headers: buildHeaders(),
-      body: JSON.stringify({ result_choice: choice })
+      body: JSON.stringify({ p_id: id, p_choice: choice })
     }).then(function (res) {
       if (!res.ok) {
         return res.text().then(function (t) { throw new Error('update failed ' + res.status + ': ' + t); });
