@@ -14,7 +14,7 @@ function loadApp() {
     runScripts: 'outside-only'
   });
   const win = dom.window;
-  for (const f of ['js/data.js', 'js/validate.js', 'js/countdown.js', 'js/form-state.js', 'js/illustrations.js', 'js/app.js']) {
+  for (const f of ['js/data.js', 'js/validate.js', 'js/countdown.js', 'js/form-state.js', 'js/illustrations.js', 'js/config.js', 'js/backend.js', 'js/app.js']) {
     win.eval(fs.readFileSync(path.join(ROOT, f), 'utf8'));
   }
   win.App.init();
@@ -356,5 +356,56 @@ test('发送验证码后完整倒数到 1 并恢复可点击', () => {
   tick();
   assert.equal(btn.textContent, '发送验证码');
   assert.equal(btn.disabled, false);
+  dom.window.close();
+});
+
+
+test('uuid 生成合法格式的报名编号', () => {
+  const dom = loadApp();
+  const win = dom.window;
+  const id = win.App.uuid();
+  assert.match(id, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+  dom.window.close();
+});
+
+test('提交报名时把表单数据上报后端并携带报名编号', async () => {
+  const dom = loadApp();
+  const win = dom.window;
+  const d = dom.window.document;
+  let captured = null;
+  win.App.submitRegistration = function (payload) { captured = payload; return Promise.resolve({ ok: true }); };
+
+  const dd = goto(dom, '#/register');
+  fireInput(dd, dd.querySelector('#parent-rows .parent-name'), '张三');
+  fireInput(dd, dd.querySelector('#child-rows .child-name'), '小明');
+  fireChange(dd, dd.querySelector('#child-rows .child-grade'), '小学三年级');
+  const opt = dd.querySelector('#course-menu .course-option[value="语文"]');
+  opt.checked = true;
+  opt.dispatchEvent(new win.Event('change', { bubbles: true }));
+  fireInput(dd, dd.getElementById('phone'), '13800138000');
+  fireInput(dd, dd.getElementById('code'), '1234');
+  dd.getElementById('submit').click();
+
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  assert.ok(captured, '应调用 submitRegistration');
+  assert.equal(captured.parents, '张三');
+  assert.equal(captured.children, '小明（小学三年级）');
+  assert.equal(captured.courses, '语文');
+  assert.equal(captured.phone, '13800138000');
+  assert.match(captured.id, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+  dom.window.close();
+});
+
+test('结果页点击按钮会上报所选结果', () => {
+  const dom = loadApp();
+  const win = dom.window;
+  const d = dom.window.document;
+  let choice = null;
+  win.App.recordResultChoice = function (id, c) { choice = c; return Promise.resolve({ ok: true }); };
+  const dd = goto(dom, '#/result');
+  dd.getElementById('btn-known').click();
+  assert.equal(choice, '我已知悉');
+  dd.getElementById('btn-unknown').click();
+  assert.equal(choice, '未知悉');
   dom.window.close();
 });
