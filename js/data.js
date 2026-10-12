@@ -85,6 +85,7 @@
       title: '数学成绩提升 24 分',
       desc: '经过一个学期的思维训练，数学从 72 分稳步提升到 96 分，应用题与计算题正确率大幅提高。',
       kind: 'math',
+      image: 'images/work-math.jpg',
       color: '#4E8EF7'
     },
     {
@@ -92,6 +93,7 @@
       title: '英语口语流畅交流',
       desc: '从不敢开口到能和外教就校园生活流畅对话 5 分钟，发音与表达自信明显提升。',
       kind: 'english',
+      image: 'images/work-english.jpg',
       color: '#4FBF8E'
     },
     {
@@ -99,6 +101,7 @@
       title: '科学实验获校级一等奖',
       desc: '独立完成的“种子发芽对比实验”在校科技节获得一等奖，记录详实、结论完整。',
       kind: 'science',
+      image: 'images/work-science.jpg',
       color: '#F2A93B'
     },
     {
@@ -106,6 +109,7 @@
       title: '创意美术《我的校园》',
       desc: '用拼贴和水彩画出心中的校园，作品被评为“最受欢迎作品”，色彩明亮、想象力满满。',
       kind: 'art',
+      image: 'images/work-art.jpg',
       color: '#8E6FE8'
     }
   ];

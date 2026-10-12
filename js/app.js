@@ -33,7 +33,7 @@
     if (workGrid) {
       workGrid.innerHTML = D.WORKS.slice(0, 3).map(function (w) {
         return '<div class="work-card">' +
-          '<div class="work-photo">' + D.workArt(w.kind) + '</div>' +
+          '<div class="work-photo"><img class="work-photo-img" src="' + esc(w.image) + '" alt="' + esc(w.title) + '"></div>' +
           '<div class="work-label">' + esc(w.title) + '</div>' +
           '</div>';
       }).join('');
@@ -192,7 +192,7 @@
     } else if (key === 'works') {
       body.innerHTML = '<div class="work-list">' + D.WORKS.map(function (w) {
         return '<div class="work-item">' +
-          '<div class="work-item-image">' + D.workArt(w.kind) + '</div>' +
+          '<div class="work-item-image"><img class="work-item-img" src="' + esc(w.image) + '" alt="' + esc(w.title) + '"></div>' +
           '<div class="work-item-body">' +
             '<div class="work-item-name">' + esc(w.name) + '</div>' +
             '<div class="work-item-title">' + esc(w.title) + '</div>' +

@@ -5,123 +5,127 @@
   'use strict';
 
   function studentBoy() {
-    return '<svg viewBox="0 0 140 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="卡通学生">' +
-      '<rect x="10" y="60" width="34" height="50" rx="10" fill="#F2A93B"/>' +
-      '<rect x="10" y="64" width="34" height="8" fill="#E8952D"/>' +
-      '<rect x="48" y="108" width="14" height="28" rx="7" fill="#3A3540"/>' +
-      '<rect x="78" y="108" width="14" height="28" rx="7" fill="#3A3540"/>' +
-      '<ellipse cx="55" cy="140" rx="12" ry="6" fill="#E8952D"/>' +
-      '<ellipse cx="85" cy="140" rx="12" ry="6" fill="#E8952D"/>' +
-      '<path d="M42 58 L98 58 L94 112 L46 112 Z" fill="#4E8EF7"/>' +
-      '<rect x="58" y="62" width="24" height="30" rx="8" fill="#FFFFFF"/>' +
-      '<path d="M44 64 Q30 72 32 92" stroke="#FFD9B8" stroke-width="10" fill="none" stroke-linecap="round"/>' +
-      '<path d="M96 64 Q110 72 108 92" stroke="#FFD9B8" stroke-width="10" fill="none" stroke-linecap="round"/>' +
-      '<rect x="58" y="44" width="24" height="14" rx="7" fill="#FFD9B8"/>' +
-      '<circle cx="70" cy="26" r="25" fill="#FFD9B8"/>' +
-      '<path d="M45 24 Q44 0 70 0 Q96 0 95 24 Q92 10 70 10 Q48 10 45 24 Z" fill="#3A3540"/>' +
-      '<circle cx="60" cy="28" r="3" fill="#3A3540"/>' +
-      '<circle cx="80" cy="28" r="3" fill="#3A3540"/>' +
-      '<path d="M62 38 Q70 44 78 38" stroke="#3A3540" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-      '<circle cx="52" cy="37" r="4" fill="#FFB3A0"/>' +
-      '<circle cx="88" cy="37" r="4" fill="#FFB3A0"/>' +
-      '</svg>';
+    return '<svg viewBox="0 0 160 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="漫画风男同学">'
+      + '<defs>'
+      + '<linearGradient id="boySkin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7CD"/><stop offset="1" stop-color="#F6C7A0"/></linearGradient>'
+      + '<linearGradient id="boyHair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#485A83"/><stop offset="1" stop-color="#26314E"/></linearGradient>'
+      + '<linearGradient id="boyBlazer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A7EC0"/><stop offset="1" stop-color="#35507D"/></linearGradient>'
+      + '</defs>'
+      + '<g stroke="#242238" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">'
+      + '<path d="M50 36 Q44 10 80 8 Q116 10 110 36 Q108 24 80 24 Q52 24 50 36 Z" fill="url(#boyHair)"/>'
+      + '<path d="M62 148 L60 186 Q60 192 68 192 L78 192 L78 148 Z" fill="#2F3B58"/>'
+      + '<path d="M98 148 L100 186 Q100 192 92 192 L82 192 L82 148 Z" fill="#2F3B58"/>'
+      + '<path d="M58 190 Q52 196 58 202 L82 202 L82 194 Z" fill="#F2F5FA"/>'
+      + '<path d="M102 190 Q108 196 102 202 L78 202 L78 194 Z" fill="#F2F5FA"/>'
+      + '<path d="M46 112 Q32 126 34 146 Q35 152 42 152 L48 150 L48 126 Q48 118 52 112 Z" fill="url(#boyBlazer)"/>'
+      + '<path d="M114 112 Q128 126 126 146 Q125 152 118 152 L112 150 L112 126 Q112 118 108 112 Z" fill="url(#boyBlazer)"/>'
+      + '<circle cx="44" cy="153" r="7" fill="url(#boySkin)"/>'
+      + '<circle cx="116" cy="153" r="7" fill="url(#boySkin)"/>'
+      + '<path d="M68 100 L80 126 L92 100 Z" fill="#FFFFFF"/>'
+      + '<path d="M46 112 Q34 124 36 142 L48 140 Z" fill="#FFFFFF"/>'
+      + '<path d="M114 112 Q126 124 124 142 L112 140 Z" fill="#FFFFFF"/>'
+      + '<path d="M48 104 Q48 96 62 96 L80 96 L80 152 L58 152 Q48 152 48 140 Z" fill="url(#boyBlazer)"/>'
+      + '<path d="M112 104 Q112 96 98 96 L80 96 L80 152 L102 152 Q112 152 112 140 Z" fill="url(#boyBlazer)"/>'
+      + '<path d="M76 100 L84 100 L82 110 L78 122 L76 110 Z" fill="#E85D75"/>'
+      + '<path d="M78 122 L82 122 L84 134 L76 134 Z" fill="#E85D75"/>'
+      + '<path d="M72 82 L88 82 L88 98 L72 98 Z" fill="url(#boySkin)"/>'
+      + '<path d="M50 44 Q50 12 80 12 Q110 12 110 44 Q110 66 94 78 Q82 86 66 78 Q50 66 50 44 Z" fill="url(#boySkin)"/>'
+      + '<path d="M50 40 Q44 14 62 10 Q56 24 58 34 Q52 28 50 40 Z" fill="url(#boyHair)"/>'
+      + '<path d="M72 6 Q88 4 96 8 Q90 20 88 30 Q82 16 72 6 Z" fill="url(#boyHair)"/>'
+      + '<path d="M100 8 Q116 14 110 40 Q104 26 100 32 Q102 20 100 8 Z" fill="url(#boyHair)"/>'
+      + '<path d="M56 48 Q64 44 72 48" fill="none" stroke="#242238" stroke-width="3"/>'
+      + '<path d="M88 48 Q96 44 104 48" fill="none" stroke="#242238" stroke-width="3"/>'
+      + '<path d="M56 54 Q64 48 72 54 Q72 68 64 70 Q56 68 56 54 Z" fill="#FFFFFF" stroke-width="2.5"/>'
+      + '<circle cx="64" cy="59" r="5" fill="#38415E"/>'
+      + '<circle cx="65.5" cy="57" r="2" fill="#FFFFFF"/>'
+      + '<path d="M88 54 Q96 48 104 54 Q104 68 96 70 Q88 68 88 54 Z" fill="#FFFFFF" stroke-width="2.5"/>'
+      + '<circle cx="96" cy="59" r="5" fill="#38415E"/>'
+      + '<circle cx="97.5" cy="57" r="2" fill="#FFFFFF"/>'
+      + '<path d="M78 66 L82 66" stroke-width="2"/>'
+      + '<path d="M72 76 Q80 82 88 76" fill="none" stroke-width="2.5"/>'
+      + '<ellipse cx="54" cy="68" rx="4" ry="2.5" fill="#F8B7A0" opacity="0.7"/>'
+      + '<ellipse cx="106" cy="68" rx="4" ry="2.5" fill="#F8B7A0" opacity="0.7"/>'
+      + '</g>'
+      + '</svg>';
   }
 
   function studentGirl() {
-    return '<svg viewBox="0 0 140 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="卡通学生">' +
-      '<circle cx="22" cy="24" r="12" fill="#6B4A2F"/>' +
-      '<circle cx="118" cy="24" r="12" fill="#6B4A2F"/>' +
-      '<rect x="48" y="108" width="13" height="28" rx="6" fill="#FFD9B8"/>' +
-      '<rect x="79" y="108" width="13" height="28" rx="6" fill="#FFD9B8"/>' +
-      '<ellipse cx="54" cy="140" rx="12" ry="6" fill="#E85D75"/>' +
-      '<ellipse cx="86" cy="140" rx="12" ry="6" fill="#E85D75"/>' +
-      '<path d="M42 58 L98 58 L108 112 L32 112 Z" fill="#E85D75"/>' +
-      '<path d="M44 64 Q30 72 32 92" stroke="#FFD9B8" stroke-width="10" fill="none" stroke-linecap="round"/>' +
-      '<path d="M96 64 Q110 72 108 92" stroke="#FFD9B8" stroke-width="10" fill="none" stroke-linecap="round"/>' +
-      '<rect x="58" y="44" width="24" height="14" rx="7" fill="#FFD9B8"/>' +
-      '<circle cx="70" cy="26" r="25" fill="#FFD9B8"/>' +
-      '<path d="M45 24 Q46 0 70 0 Q94 0 95 24 Q91 9 70 9 Q49 9 45 24 Z" fill="#6B4A2F"/>' +
-      '<path d="M46 12 Q26 10 22 24 Q30 18 46 16 Z" fill="#6B4A2F"/>' +
-      '<path d="M94 12 Q114 10 118 24 Q110 18 94 16 Z" fill="#6B4A2F"/>' +
-      '<circle cx="60" cy="28" r="3" fill="#3A3540"/>' +
-      '<circle cx="80" cy="28" r="3" fill="#3A3540"/>' +
-      '<path d="M62 38 Q70 44 78 38" stroke="#3A3540" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-      '<circle cx="52" cy="37" r="4" fill="#FFB3A0"/>' +
-      '<circle cx="88" cy="37" r="4" fill="#FFB3A0"/>' +
-      '</svg>';
+    return '<svg viewBox="0 0 160 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="漫画风女同学">'
+      + '<defs>'
+      + '<linearGradient id="girlSkin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7CD"/><stop offset="1" stop-color="#F6C7A0"/></linearGradient>'
+      + '<linearGradient id="girlHair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8B6547"/><stop offset="1" stop-color="#5F412E"/></linearGradient>'
+      + '<linearGradient id="girlBlazer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6F8FC8"/><stop offset="1" stop-color="#3D5A80"/></linearGradient>'
+      + '</defs>'
+      + '<g stroke="#242238" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">'
+      + '<path d="M46 38 Q40 14 80 12 Q120 14 114 38 Q124 74 116 120 Q112 140 102 144 Q98 120 94 92 Q88 116 80 118 Q72 116 66 92 Q62 120 58 144 Q48 140 44 120 Q36 74 46 38 Z" fill="url(#girlHair)"/>'
+      + '<path d="M62 148 L60 186 Q60 192 68 192 L78 192 L78 148 Z" fill="#2F3B58"/>'
+      + '<path d="M98 148 L100 186 Q100 192 92 192 L82 192 L82 148 Z" fill="#2F3B58"/>'
+      + '<path d="M58 190 Q52 196 58 202 L82 202 L82 194 Z" fill="#F2F5FA"/>'
+      + '<path d="M102 190 Q108 196 102 202 L78 202 L78 194 Z" fill="#F2F5FA"/>'
+      + '<path d="M46 112 Q32 126 34 146 Q35 152 42 152 L48 150 L48 126 Q48 118 52 112 Z" fill="url(#girlBlazer)"/>'
+      + '<path d="M114 112 Q128 126 126 146 Q125 152 118 152 L112 150 L112 126 Q112 118 108 112 Z" fill="url(#girlBlazer)"/>'
+      + '<circle cx="44" cy="153" r="7" fill="url(#girlSkin)"/>'
+      + '<circle cx="116" cy="153" r="7" fill="url(#girlSkin)"/>'
+      + '<path d="M70 100 L80 126 L90 100 Z" fill="#FFFFFF"/>'
+      + '<path d="M48 104 Q48 96 62 96 L80 96 L80 152 L58 152 Q48 152 48 140 Z" fill="url(#girlBlazer)"/>'
+      + '<path d="M112 104 Q112 96 98 96 L80 96 L80 152 L102 152 Q112 152 112 140 Z" fill="url(#girlBlazer)"/>'
+      + '<path d="M74 102 L86 102 L84 110 L80 106 L76 110 Z" fill="#E85D75"/>'
+      + '<path d="M72 82 L88 82 L88 98 L72 98 Z" fill="url(#girlSkin)"/>'
+      + '<path d="M50 44 Q50 12 80 12 Q110 12 110 44 Q110 66 94 78 Q82 86 66 78 Q50 66 50 44 Z" fill="url(#girlSkin)"/>'
+      + '<path d="M48 42 Q46 14 80 12 Q114 14 112 42 Q108 26 96 30 Q90 18 80 20 Q70 18 64 30 Q52 26 48 42 Z" fill="url(#girlHair)"/>'
+      + '<path d="M46 38 Q48 60 58 76 Q50 56 46 38 Z" fill="url(#girlHair)"/>'
+      + '<path d="M114 38 Q112 60 102 76 Q110 56 114 38 Z" fill="url(#girlHair)"/>'
+      + '<path d="M56 48 Q64 45 72 48" fill="none" stroke="#242238" stroke-width="2.5"/>'
+      + '<path d="M88 48 Q96 45 104 48" fill="none" stroke="#242238" stroke-width="2.5"/>'
+      + '<path d="M56 53 Q64 46 72 53 Q72 68 64 71 Q56 68 56 53 Z" fill="#FFFFFF" stroke-width="2.5"/>'
+      + '<circle cx="64" cy="59" r="5.5" fill="#38415E"/>'
+      + '<circle cx="65.5" cy="56.5" r="2" fill="#FFFFFF"/>'
+      + '<circle cx="62.5" cy="62" r="1.2" fill="#FFFFFF"/>'
+      + '<path d="M52 51 L56 53" stroke-width="2"/>'
+      + '<path d="M88 53 Q96 46 104 53 Q104 68 96 71 Q88 68 88 53 Z" fill="#FFFFFF" stroke-width="2.5"/>'
+      + '<circle cx="96" cy="59" r="5.5" fill="#38415E"/>'
+      + '<circle cx="97.5" cy="56.5" r="2" fill="#FFFFFF"/>'
+      + '<circle cx="94.5" cy="62" r="1.2" fill="#FFFFFF"/>'
+      + '<path d="M104 51 L108 53" stroke-width="2"/>'
+      + '<path d="M78 66 L82 66" stroke-width="2"/>'
+      + '<path d="M73 76 Q80 81 87 76" fill="none" stroke-width="2.5"/>'
+      + '<ellipse cx="54" cy="68" rx="4.5" ry="3" fill="#F8B7A0" opacity="0.75"/>'
+      + '<ellipse cx="106" cy="68" rx="4.5" ry="3" fill="#F8B7A0" opacity="0.75"/>'
+      + '</g>'
+      + '</svg>';
   }
 
   function featureArt(key) {
     var art = {
-      subjects: '<svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="多学科">' +
-        '<rect x="10" y="14" width="56" height="12" rx="4" fill="#4E8EF7"/>' +
-        '<rect x="14" y="28" width="62" height="12" rx="4" fill="#F2A93B"/>' +
-        '<rect x="8" y="42" width="52" height="12" rx="4" fill="#4FBF8E"/>' +
-        '<rect x="70" y="16" width="14" height="44" rx="6" fill="#E8952D"/>' +
-        '</svg>',
-      feedback: '<svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="可视化反馈">' +
-        '<rect x="22" y="8" width="52" height="58" rx="8" fill="#FFFFFF" stroke="#4E8EF7" stroke-width="3"/>' +
-        '<rect x="38" y="4" width="20" height="10" rx="3" fill="#4E8EF7"/>' +
-        '<rect x="32" y="52" width="10" height="10" fill="#4E8EF7"/>' +
-        '<rect x="45" y="42" width="10" height="20" fill="#4FBF8E"/>' +
-        '<rect x="58" y="32" width="10" height="30" fill="#F2A93B"/>' +
-        '</svg>',
-      continue: '<svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="课后延续">' +
-        '<rect x="8" y="26" width="42" height="32" rx="6" fill="#F2A93B"/>' +
-        '<rect x="8" y="26" width="42" height="7" fill="#E8952D"/>' +
-        '<rect x="25" y="20" width="8" height="44" fill="#F7C873"/>' +
-        '<rect x="52" y="30" width="38" height="30" rx="15" fill="#EAF4FF" stroke="#4E8EF7" stroke-width="3"/>' +
-        '<circle cx="63" cy="45" r="3" fill="#4E8EF7"/>' +
-        '<circle cx="72" cy="45" r="3" fill="#4E8EF7"/>' +
-        '<circle cx="81" cy="45" r="3" fill="#4E8EF7"/>' +
-        '</svg>'
+      subjects: '<svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="多学科">'
+        + '<defs><linearGradient id="fa-sub" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7BA6F2"/><stop offset="1" stop-color="#4E8EF7"/></linearGradient></defs>'
+        + '<rect x="8" y="6" width="80" height="60" rx="14" fill="#EAF4FF" stroke="#4E8EF7" stroke-width="2.5"/>'
+        + '<rect x="18" y="16" width="42" height="9" rx="4.5" fill="url(#fa-sub)"/>'
+        + '<rect x="18" y="30" width="56" height="9" rx="4.5" fill="#F2A93B"/>'
+        + '<rect x="18" y="44" width="34" height="9" rx="4.5" fill="#4FBF8E"/>'
+        + '<circle cx="66" cy="47" r="8" fill="#8E6FE8"/>'
+        + '<path d="M62 47 L66 50 L72 43" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+        + '</svg>',
+      feedback: '<svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="可视化反馈">'
+        + '<rect x="8" y="6" width="80" height="60" rx="14" fill="#EAFBF1" stroke="#4FBF8E" stroke-width="2.5"/>'
+        + '<rect x="22" y="14" width="42" height="42" rx="7" fill="#FFFFFF" stroke="#4E8EF7" stroke-width="2.5"/>'
+        + '<rect x="38" y="9" width="10" height="8" rx="2" fill="#4E8EF7"/>'
+        + '<rect x="27" y="46" width="7" height="7" rx="2" fill="#4E8EF7"/>'
+        + '<rect x="37" y="38" width="7" height="15" rx="2" fill="#4FBF8E"/>'
+        + '<rect x="47" y="31" width="7" height="22" rx="2" fill="#F2A93B"/>'
+        + '<path d="M70 22 L86 22 M70 30 L84 30 M70 38 L88 38" stroke="#4FBF8E" stroke-width="3" stroke-linecap="round"/>'
+        + '</svg>',
+      continue: '<svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="课后延续">'
+        + '<rect x="8" y="6" width="80" height="60" rx="14" fill="#FFF4E2" stroke="#F2A93B" stroke-width="2.5"/>'
+        + '<rect x="14" y="22" width="34" height="26" rx="6" fill="#F2A93B"/>'
+        + '<rect x="14" y="22" width="34" height="7" fill="#E8952D"/>'
+        + '<path d="M28 16 L36 44 L20 44 Z" fill="#F7C873"/>'
+        + '<rect x="54" y="24" width="30" height="24" rx="12" fill="#FFFFFF" stroke="#4E8EF7" stroke-width="2.5"/>'
+        + '<circle cx="62" cy="36" r="2.5" fill="#4E8EF7"/><circle cx="69" cy="36" r="2.5" fill="#4E8EF7"/><circle cx="76" cy="36" r="2.5" fill="#4E8EF7"/>'
+        + '</svg>'
     };
     return art[key] || art.subjects;
   }
 
-  function workArt(kind) {
-    var art = {
-      math: '<svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="数学">' +
-        '<rect x="16" y="8" width="72" height="70" rx="7" fill="#FFFFFF" stroke="#4E8EF7" stroke-width="3"/>' +
-        '<line x1="26" y1="24" x2="78" y2="24" stroke="#4E8EF7" stroke-width="2"/>' +
-        '<line x1="26" y1="36" x2="70" y2="36" stroke="#4E8EF7" stroke-width="2"/>' +
-        '<text x="26" y="56" font-size="17" fill="#F2A93B" font-weight="bold">72 → 96</text>' +
-        '<text x="26" y="74" font-size="13" fill="#3A3540">+24 分</text>' +
-        '<rect x="96" y="10" width="10" height="60" rx="4" fill="#F2A93B"/>' +
-        '<polygon points="96,10 106,10 101,4" fill="#F7C873"/>' +
-        '</svg>',
-      english: '<svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="英语口语">' +
-        '<circle cx="34" cy="46" r="20" fill="#FFD9B8"/>' +
-        '<path d="M14 42 Q14 20 34 20 Q54 20 54 42 Q52 30 34 30 Q16 30 14 42 Z" fill="#8B5A2B"/>' +
-        '<circle cx="27" cy="46" r="2.5" fill="#3A3540"/>' +
-        '<circle cx="41" cy="46" r="2.5" fill="#3A3540"/>' +
-        '<path d="M29 54 Q34 58 39 54" stroke="#3A3540" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
-        '<circle cx="86" cy="46" r="20" fill="#F4C9A0"/>' +
-        '<path d="M66 42 Q66 20 86 20 Q106 20 106 42 Q104 30 86 30 Q68 30 66 42 Z" fill="#3A3540"/>' +
-        '<circle cx="79" cy="46" r="2.5" fill="#3A3540"/>' +
-        '<circle cx="93" cy="46" r="2.5" fill="#3A3540"/>' +
-        '<path d="M81 54 Q86 58 91 54" stroke="#3A3540" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
-        '<path d="M54 28 Q64 16 58 6 Q63 16 71 28 Z" fill="#EAF4FF" stroke="#4E8EF7" stroke-width="2"/>' +
-        '</svg>',
-      science: '<svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="科学实验">' +
-        '<path d="M52 14 L68 14 L68 40 L90 72 Q94 80 78 80 L42 80 Q26 80 30 72 L52 40 Z" fill="#D9F2E7" stroke="#4FBF8E" stroke-width="3"/>' +
-        '<rect x="50" y="6" width="20" height="10" rx="3" fill="#4FBF8E"/>' +
-        '<circle cx="50" cy="58" r="5" fill="#4FBF8E"/>' +
-        '<circle cx="64" cy="66" r="4" fill="#4FBF8E"/>' +
-        '<path d="M96 34 Q104 24 106 14 Q112 24 104 36 Z" fill="#4FBF8E"/>' +
-        '<line x1="104" y1="36" x2="104" y2="52" stroke="#4FBF8E" stroke-width="3"/>' +
-        '</svg>',
-      art: '<svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="创意美术">' +
-        '<ellipse cx="54" cy="52" rx="32" ry="26" fill="#FCE7C1" stroke="#F2A93B" stroke-width="3"/>' +
-        '<circle cx="41" cy="43" r="6" fill="#E45B5B"/>' +
-        '<circle cx="58" cy="37" r="6" fill="#4E8EF7"/>' +
-        '<circle cx="71" cy="50" r="6" fill="#4FBF8E"/>' +
-        '<circle cx="51" cy="62" r="6" fill="#8E6FE8"/>' +
-        '<rect x="88" y="24" width="10" height="52" rx="5" fill="#B78B5A" transform="rotate(28 93 50)"/>' +
-        '</svg>'
-    };
-    return art[kind] || art.math;
-  }
-
-  return { studentBoy, studentGirl, featureArt, workArt };
+  return { studentBoy, studentGirl, featureArt };
 });
