@@ -86,7 +86,22 @@ test('详情页显示各模块详细内容', () => {
   d = goto(dom, '#/detail/works');
   assert.equal(d.getElementById('detail-title').textContent, '往期学员成果');
   assert.equal(d.querySelectorAll('#detail-body .work-item').length, 4);
-  assert.equal(d.querySelectorAll('#detail-body .work-item-image svg').length, 4);
+  assert.equal(d.querySelectorAll('#detail-body .work-item-image img.work-item-img').length, 4);
+});
+
+test('往期成果使用真实图片（非 SVG 图标）', () => {
+  const dom = loadApp();
+  const d = dom.window.document;
+  const posterImgs = d.querySelectorAll('#work-grid .work-card img.work-photo-img');
+  assert.equal(posterImgs.length, 3);
+  assert.equal(posterImgs[0].getAttribute('src'), 'images/work-math.jpg');
+
+  const d2 = goto(dom, '#/detail/works');
+  const detailImgs = d2.querySelectorAll('#detail-body .work-item img.work-item-img');
+  assert.equal(detailImgs.length, 4);
+  assert.equal(detailImgs[0].getAttribute('src'), 'images/work-math.jpg');
+  assert.equal(detailImgs[3].getAttribute('src'), 'images/work-art.jpg');
+  dom.window.close();
 });
 
 test('未知 hash 回退到海报页', () => {
