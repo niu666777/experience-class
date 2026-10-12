@@ -667,6 +667,22 @@ body {
   cursor: pointer;
 }
 
+.child-card {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: #F7FAFF;
+  border: 1px solid #E4ECF7;
+  border-radius: 14px;
+}
+
+.child-course-row {
+  margin-top: 10px;
+}
+
+.child-course-row .course-select {
+  width: 100%;
+}
+
 .course-select {
   width: 100%;
   padding: 13px;

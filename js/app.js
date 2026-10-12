@@ -108,36 +108,32 @@
       var options = D.GRADES.map(function (g) {
         return '<option value="' + esc(g) + '"' + (c.grade === g ? ' selected' : '') + '>' + esc(g) + '</option>';
       }).join('');
-      return '<div class="row">' +
-        '<input type="text" class="child-name" placeholder="请输入孩子姓名" value="' + esc(c.name) + '" data-index="' + i + '">' +
-        '<select class="child-grade" data-index="' + i + '"><option value="">请选择年级</option>' + options + '</select>' +
-        '<button type="button" class="row-del" data-index="' + i + '">×</button>' +
-        '</div>';
-    }).join('');
-  }
-
-  function renderCourseMenu() {
-    var el = document.getElementById('course-menu');
-    if (!el) { return; }
-    el.innerHTML = D.COURSES.map(function (c) {
-      var checked = state.courses.indexOf(c) !== -1 ? ' checked' : '';
-      return '<label><input type="checkbox" class="course-option" value="' + esc(c) + '"' + checked + '> ' + esc(c) + '</label>';
-    }).join('');
-  }
-
-  function renderCourseChips() {
-    var el = document.getElementById('course-chips');
-    if (!el) { return; }
-    el.innerHTML = state.courses.map(function (c) {
-      return '<span class="chip">' + esc(c) + '</span>';
+      var courseOptions = D.COURSES.map(function (co) {
+        var checked = c.courses.indexOf(co) !== -1 ? ' checked' : '';
+        return '<label><input type="checkbox" class="child-course-option" value="' + esc(co) + '" data-index="' + i + '"' + checked + '> ' + esc(co) + '</label>';
+      }).join('');
+      var chips = c.courses.map(function (co) {
+        return '<span class="chip">' + esc(co) + '</span>';
+      }).join('');
+      var btnLabel = c.courses.length ? '已选 ' + c.courses.length + ' 门课程' : '请选择课程';
+      return '<div class="child-card">' +
+        '<div class="row">' +
+          '<input type="text" class="child-name" placeholder="请输入孩子姓名" value="' + esc(c.name) + '" data-index="' + i + '">' +
+          '<select class="child-grade" data-index="' + i + '"><option value="">请选择年级</option>' + options + '</select>' +
+          '<button type="button" class="row-del" data-index="' + i + '">×</button>' +
+        '</div>' +
+        '<div class="child-course-row">' +
+          '<button type="button" class="course-select child-course-select" data-index="' + i + '">' + btnLabel + '</button>' +
+        '</div>' +
+        '<div class="course-menu child-course-menu" data-index="' + i + '">' + courseOptions + '</div>' +
+        '<div class="chips">' + chips + '</div>' +
+      '</div>';
     }).join('');
   }
 
   function renderRegister() {
     renderParentRows();
     renderChildRows();
-    renderCourseMenu();
-    renderCourseChips();
   }
 
   function renderResult() {
@@ -199,8 +195,9 @@
   var countdown = null;
 
   function rowIndex(el) {
-    var row = el.closest('.row');
-    return Array.prototype.indexOf.call(row.parentNode.children, row);
+    var v = el.getAttribute('data-index');
+    if (v === null || v === '') { return -1; }
+    return parseInt(v, 10);
   }
 
   function setPhoneError(msg) {
@@ -276,8 +273,11 @@
     var payload = {
       id: id,
       parents: state.parents.join('、'),
-      children: state.children.map(function (c) { return c.name + '（' + c.grade + '）'; }).join('、'),
-      courses: state.courses.join('、'),
+      children: state.children.map(function (c) { return c.name + '（' + c.grade + '，课程：' + c.courses.join('、') + '）'; }).join('；'),
+      courses: state.children.reduce(function (acc, c) {
+        c.courses.forEach(function (co) { if (acc.indexOf(co) === -1) { acc.push(co); } });
+        return acc;
+      }, []).join('、'),
       phone: state.phone,
       code: state.code
     };
@@ -326,6 +326,10 @@
       if (e.target.classList.contains('child-grade')) {
         state = D.updateChild(state, rowIndex(e.target), 'grade', e.target.value);
         syncSubmit();
+      } else if (e.target.classList.contains('child-course-option')) {
+        state = D.toggleCourse(state, rowIndex(e.target), e.target.value);
+        renderChildRows();
+        syncSubmit();
       }
     });
 
@@ -334,19 +338,9 @@
         state = D.removeChild(state, rowIndex(e.target));
         renderChildRows();
         syncSubmit();
-      }
-    });
-
-    document.getElementById('course-select').addEventListener('click', function () {
-      document.getElementById('course-menu').classList.toggle('open');
-    });
-
-    document.getElementById('course-menu').addEventListener('change', function (e) {
-      if (e.target.classList.contains('course-option')) {
-        state = D.toggleCourse(state, e.target.value);
-        renderCourseMenu();
-        renderCourseChips();
-        syncSubmit();
+      } else if (e.target.classList.contains('child-course-select')) {
+        var menu = document.querySelector('.child-course-menu[data-index="' + rowIndex(e.target) + '"]');
+        if (menu) { menu.classList.toggle('open'); }
       }
     });
 
