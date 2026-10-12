@@ -396,16 +396,43 @@ test('提交报名时把表单数据上报后端并携带报名编号', async ()
   dom.window.close();
 });
 
-test('结果页点击按钮会上报所选结果', () => {
+test('结果页点击按钮会把选择上报到同一条报名记录', async () => {
   const dom = loadApp();
   const win = dom.window;
   const d = dom.window.document;
-  let choice = null;
-  win.App.recordResultChoice = function (id, c) { choice = c; return Promise.resolve({ ok: true }); };
+  let submittedId = null;
+  let reported = null;
+  win.App.submitRegistration = function (payload) { submittedId = payload.id; return Promise.resolve({ ok: true }); };
+  win.App.recordResultChoice = function (id, c) { reported = { id: id, choice: c }; return Promise.resolve({ ok: true }); };
+
+  const dd = goto(dom, '#/register');
+  fireInput(dd, dd.querySelector('#parent-rows .parent-name'), '李四');
+  fireInput(dd, dd.querySelector('#child-rows .child-name'), '小红');
+  fireChange(dd, dd.querySelector('#child-rows .child-grade'), '小学一年级');
+  const opt = dd.querySelector('#course-menu .course-option[value="英语"]');
+  opt.checked = true;
+  opt.dispatchEvent(new win.Event('change', { bubbles: true }));
+  fireInput(dd, dd.getElementById('phone'), '13900139000');
+  fireInput(dd, dd.getElementById('code'), '5678');
+  dd.getElementById('submit').click();
+
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  assert.ok(submittedId, '提交时应生成报名编号');
+
+  dd.getElementById('btn-known').click();
+  await new Promise((resolve) => setTimeout(resolve, 30));
+  assert.ok(reported, '点击按钮应上报结果');
+  assert.equal(reported.id, submittedId);
+  assert.equal(reported.choice, '我已知悉');
+  assert.equal(dd.getElementById('result-save-status').textContent, '结果已记录');
+  dom.window.close();
+});
+
+test('未提交报名直接进入结果页时点击按钮提示无法关联', () => {
+  const dom = loadApp();
+  const d = dom.window.document;
   const dd = goto(dom, '#/result');
   dd.getElementById('btn-known').click();
-  assert.equal(choice, '我已知悉');
-  dd.getElementById('btn-unknown').click();
-  assert.equal(choice, '未知悉');
+  assert.equal(dd.getElementById('result-save-status').textContent, '未能关联到本次报名，请返回重新提交');
   dom.window.close();
 });

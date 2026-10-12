@@ -812,6 +812,18 @@ body {
   border-radius: 16px;
 }
 
+.result-save-status {
+  min-height: 22px;
+  margin: 0 0 20px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.result-save-status.ok { color: #1FA96F; }
+
+.result-save-status.error { color: var(--red); }
+
 /* ---------- 响应式 ---------- */
 @media (min-width: 768px) {
   .teacher-grid { grid-template-columns: repeat(3, 1fr); }
