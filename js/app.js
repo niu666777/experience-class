@@ -236,15 +236,45 @@
 
   var currentSubmissionId = null;
 
+  function rememberSubmissionId(id) {
+    currentSubmissionId = id;
+    try { sessionStorage.setItem('submissionId', id); } catch (e) {}
+  }
+
+  function recallSubmissionId() {
+    if (currentSubmissionId) { return currentSubmissionId; }
+    try { currentSubmissionId = sessionStorage.getItem('submissionId') || null; } catch (e) {}
+    return currentSubmissionId;
+  }
+
+  function saveResultChoice(choice) {
+    var id = recallSubmissionId();
+    var status = document.getElementById('result-save-status');
+    if (!id) {
+      if (status) { status.textContent = '未能关联到本次报名，请返回重新提交'; status.className = 'result-save-status error'; }
+      return;
+    }
+    var attempt = function (n) {
+      D.recordResultChoice(id, choice).then(function () {
+        if (status) { status.textContent = '结果已记录'; status.className = 'result-save-status ok'; }
+      }, function () {
+        if (n < 1) { setTimeout(function () { attempt(n + 1); }, 1500); }
+        else if (status) { status.textContent = '结果记录失败，请检查网络后重试'; status.className = 'result-save-status error'; }
+      });
+    };
+    attempt(0);
+  }
+
   function submit() {
     var btn = document.getElementById('submit');
     if (btn.disabled) { return; }
     btn.disabled = true;
     btn.textContent = D.COPY.SUBMITTING_LABEL;
 
-    currentSubmissionId = D.uuid();
+    var id = D.uuid();
+    rememberSubmissionId(id);
     var payload = {
-      id: currentSubmissionId,
+      id: id,
       parents: state.parents.join('、'),
       children: state.children.map(function (c) { return c.name + '（' + c.grade + '）'; }).join('、'),
       courses: state.courses.join('、'),
@@ -347,12 +377,12 @@
 
     document.getElementById('btn-known').addEventListener('click', function () {
       document.getElementById('result-feedback').textContent = D.COPY.KNOWN_TEXT;
-      D.recordResultChoice(currentSubmissionId, '我已知悉').catch(function () {});
+      saveResultChoice('我已知悉');
     });
 
     document.getElementById('btn-unknown').addEventListener('click', function () {
       document.getElementById('result-feedback').textContent = D.COPY.UNKNOWN_TEXT;
-      D.recordResultChoice(currentSubmissionId, '未知悉').catch(function () {});
+      saveResultChoice('未知悉');
     });
   }
 
