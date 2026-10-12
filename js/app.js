@@ -234,14 +234,27 @@
     countdown.start(D.COPY.COUNTDOWN_SECONDS);
   }
 
+  var currentSubmissionId = null;
+
   function submit() {
     var btn = document.getElementById('submit');
     if (btn.disabled) { return; }
     btn.disabled = true;
     btn.textContent = D.COPY.SUBMITTING_LABEL;
-    setTimeout(function () {
-      location.hash = '#/result';
-    }, 500);
+
+    currentSubmissionId = D.uuid();
+    var payload = {
+      id: currentSubmissionId,
+      parents: state.parents.join('、'),
+      children: state.children.map(function (c) { return c.name + '（' + c.grade + '）'; }).join('、'),
+      courses: state.courses.join('、'),
+      phone: state.phone,
+      code: state.code
+    };
+
+    var go = function () { location.hash = '#/result'; };
+    var timeout = new Promise(function (resolve) { setTimeout(resolve, 5000); });
+    Promise.race([D.submitRegistration(payload), timeout]).then(go, go);
   }
 
   function bindEvents() {
@@ -334,10 +347,12 @@
 
     document.getElementById('btn-known').addEventListener('click', function () {
       document.getElementById('result-feedback').textContent = D.COPY.KNOWN_TEXT;
+      D.recordResultChoice(currentSubmissionId, '我已知悉').catch(function () {});
     });
 
     document.getElementById('btn-unknown').addEventListener('click', function () {
       document.getElementById('result-feedback').textContent = D.COPY.UNKNOWN_TEXT;
+      D.recordResultChoice(currentSubmissionId, '未知悉').catch(function () {});
     });
   }
 
