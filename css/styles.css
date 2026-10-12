@@ -64,60 +64,6 @@ body {
   box-shadow: 0 14px 32px rgba(22, 54, 168, 0.22);
 }
 
-.page-head::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 46px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0), #F6FAFF);
-  pointer-events: none;
-}
-
-.hero-decor {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.sun {
-  position: absolute;
-  top: 12px;
-  right: 18px;
-  width: 58px;
-  opacity: 0.96;
-}
-
-.cloud {
-  position: absolute;
-  top: 22px;
-  width: 92px;
-  opacity: 0.9;
-}
-
-.cloud-1 { left: 6px; }
-.cloud-2 { left: 42px; top: 46px; width: 72px; opacity: 0.55; }
-
-.bunting {
-  position: absolute;
-  top: 6px;
-  left: 8px;
-  right: 8px;
-  height: 34px;
-  opacity: 0.95;
-}
-
-.campus {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 8px;
-  height: 90px;
-  opacity: 0.98;
-}
-
 .site-title {
   position: relative;
   margin: 0;
