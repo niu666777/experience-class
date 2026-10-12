@@ -123,7 +123,7 @@ test('报名页展示初始表单结构', () => {
   assert.ok(d.getElementById('view-register').classList.contains('active'));
   assert.equal(d.querySelectorAll('#parent-rows .row').length, 1);
   assert.equal(d.querySelectorAll('#child-rows .row').length, 1);
-  assert.equal(d.querySelectorAll('#course-menu .course-option').length, 11);
+  assert.equal(d.querySelectorAll('#child-rows .child-course-option').length, 11);
   assert.equal(d.getElementById('submit').disabled, true);
   assert.equal(d.getElementById('send-code').textContent, '发送验证码');
 });
@@ -187,7 +187,7 @@ test('所有必填项填写完成后立即报名启用', () => {
   fireInput(d, d.querySelector('#parent-rows .parent-name'), '张三');
   fireInput(d, d.querySelector('#child-rows .child-name'), '小明');
   fireChange(d, d.querySelector('#child-rows .child-grade'), '小学三年级');
-  const opt = d.querySelector('#course-menu .course-option[value="语文"]');
+  const opt = d.querySelector('#child-rows .child-course-option[value="语文"]');
   opt.checked = true;
   opt.dispatchEvent(new d.defaultView.Event('change', { bubbles: true }));
   fireInput(d, d.getElementById('phone'), '13800138000');
@@ -235,7 +235,7 @@ test('提交后按钮变为正在提交并跳转结果页', async () => {
   fireInput(d, d.querySelector('#parent-rows .parent-name'), '张三');
   fireInput(d, d.querySelector('#child-rows .child-name'), '小明');
   fireChange(d, d.querySelector('#child-rows .child-grade'), '小学三年级');
-  const opt = d.querySelector('#course-menu .course-option[value="语文"]');
+  const opt = d.querySelector('#child-rows .child-course-option[value="语文"]');
   opt.checked = true;
   opt.dispatchEvent(new d.defaultView.Event('change', { bubbles: true }));
   fireInput(d, d.getElementById('phone'), '13800138000');
@@ -274,7 +274,7 @@ test('全流程：海报→详情→返回→报名→提交→结果', async ()
   fireInput(d, d.querySelector('#parent-rows .parent-name'), '张三');
   fireInput(d, d.querySelector('#child-rows .child-name'), '小明');
   fireChange(d, d.querySelector('#child-rows .child-grade'), '小学三年级');
-  const opt = d.querySelector('#course-menu .course-option[value="语文"]');
+  const opt = d.querySelector('#child-rows .child-course-option[value="语文"]');
   opt.checked = true;
   opt.dispatchEvent(new win.Event('change', { bubbles: true }));
   fireInput(d, d.getElementById('phone'), '13800138000');
@@ -360,6 +360,42 @@ test('发送验证码后完整倒数到 1 并恢复可点击', () => {
 });
 
 
+test('每个孩子有独立的感兴趣课程并正确上报', async () => {
+  const dom = loadApp();
+  const win = dom.window;
+  const d = dom.window.document;
+  let captured = null;
+  win.App.submitRegistration = function (payload) { captured = payload; return Promise.resolve({ ok: true }); };
+
+  const dd = goto(dom, '#/register');
+  fireInput(dd, dd.querySelector('#parent-rows .parent-name'), '张三');
+
+  // 孩子一
+  fireInput(dd, dd.querySelectorAll('#child-rows .child-name')[0], '小明');
+  fireChange(dd, dd.querySelectorAll('#child-rows .child-grade')[0], '小学三年级');
+  const o1 = dd.querySelectorAll('#child-rows .child-course-option[value="语文"]')[0];
+  o1.checked = true;
+  o1.dispatchEvent(new win.Event('change', { bubbles: true }));
+
+  // 孩子二
+  dd.getElementById('add-child').click();
+  fireInput(dd, dd.querySelectorAll('#child-rows .child-name')[1], '小红');
+  fireChange(dd, dd.querySelectorAll('#child-rows .child-grade')[1], '小学一年级');
+  const o2 = dd.querySelectorAll('#child-rows .child-course-option[value="英语"]')[1];
+  o2.checked = true;
+  o2.dispatchEvent(new win.Event('change', { bubbles: true }));
+
+  fireInput(dd, dd.getElementById('phone'), '13800138000');
+  fireInput(dd, dd.getElementById('code'), '1234');
+  dd.getElementById('submit').click();
+
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  assert.ok(captured, '应调用 submitRegistration');
+  assert.equal(captured.children, '小明（小学三年级，课程：语文）；小红（小学一年级，课程：英语）');
+  assert.equal(captured.courses, '语文、英语');
+  dom.window.close();
+});
+
 test('uuid 生成合法格式的报名编号', () => {
   const dom = loadApp();
   const win = dom.window;
@@ -379,7 +415,7 @@ test('提交报名时把表单数据上报后端并携带报名编号', async ()
   fireInput(dd, dd.querySelector('#parent-rows .parent-name'), '张三');
   fireInput(dd, dd.querySelector('#child-rows .child-name'), '小明');
   fireChange(dd, dd.querySelector('#child-rows .child-grade'), '小学三年级');
-  const opt = dd.querySelector('#course-menu .course-option[value="语文"]');
+  const opt = dd.querySelector('#child-rows .child-course-option[value="语文"]');
   opt.checked = true;
   opt.dispatchEvent(new win.Event('change', { bubbles: true }));
   fireInput(dd, dd.getElementById('phone'), '13800138000');
@@ -389,7 +425,7 @@ test('提交报名时把表单数据上报后端并携带报名编号', async ()
   await new Promise((resolve) => setTimeout(resolve, 80));
   assert.ok(captured, '应调用 submitRegistration');
   assert.equal(captured.parents, '张三');
-  assert.equal(captured.children, '小明（小学三年级）');
+  assert.equal(captured.children, '小明（小学三年级，课程：语文）');
   assert.equal(captured.courses, '语文');
   assert.equal(captured.phone, '13800138000');
   assert.match(captured.id, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
@@ -409,7 +445,7 @@ test('结果页点击按钮会把选择上报到同一条报名记录', async ()
   fireInput(dd, dd.querySelector('#parent-rows .parent-name'), '李四');
   fireInput(dd, dd.querySelector('#child-rows .child-name'), '小红');
   fireChange(dd, dd.querySelector('#child-rows .child-grade'), '小学一年级');
-  const opt = dd.querySelector('#course-menu .course-option[value="英语"]');
+  const opt = dd.querySelector('#child-rows .child-course-option[value="英语"]');
   opt.checked = true;
   opt.dispatchEvent(new win.Event('change', { bubbles: true }));
   fireInput(dd, dd.getElementById('phone'), '13900139000');
