@@ -130,6 +130,30 @@ body {
 .doodle-5 { bottom: 74px; right: 12px; width: 24px; height: 28px; opacity: 0.55; transform: rotate(-10deg); }
 .doodle-6 { top: 96px; left: 22px; width: 18px; height: 18px; opacity: 0.7; }
 
+/* 首屏：左文字 + 右卡通人物（对应素材一的主视觉位置） */
+.hero-main {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.hero-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+.hero-art {
+  flex: 0 0 auto;
+  display: block;
+  width: 112px;
+  height: auto;
+  margin-bottom: -6px;
+  filter: drop-shadow(0 7px 0 rgba(14, 42, 110, 0.20));
+}
+
 .hero-badge {
   position: relative;
   z-index: 2;
@@ -169,7 +193,7 @@ body {
   display: block;
   width: 168px;
   height: 12px;
-  margin: 8px auto 0;
+  margin: 8px 0 0;
 }
 
 .site-subtitle {
@@ -234,6 +258,17 @@ body {
   font-weight: 900;
   letter-spacing: 0;
   color: var(--blue);
+}
+
+/* 模块内的课堂场景插画（对应素材二的内容块插画） */
+.module-art {
+  margin-top: 12px;
+}
+
+.module-art img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ==========================================================================
@@ -531,7 +566,7 @@ body {
   padding: 15px;
   border: none;
   border-radius: 999px;
-  background: linear-gradient(180deg, #FF9C4D, #FF7A2F);
+  background: linear-gradient(180deg, #5C92FF, #2F6BFF);
   color: #FFFFFF;
   font-size: 17px;
   font-weight: 900;
@@ -539,13 +574,13 @@ body {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 5px 0 #C24E11, 0 12px 22px rgba(194, 78, 17, 0.24);
+  box-shadow: 0 5px 0 #1B49C4, 0 12px 22px rgba(27, 73, 196, 0.26);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-primary:active {
   transform: translateY(3px);
-  box-shadow: 0 2px 0 #C24E11, 0 6px 14px rgba(194, 78, 17, 0.2);
+  box-shadow: 0 2px 0 #1B49C4, 0 6px 14px rgba(27, 73, 196, 0.22);
 }
 
 .btn-primary:disabled {
@@ -619,12 +654,12 @@ body {
   padding: 10px 20px;
   font-size: 15.5px;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 0 #C24E11;
+  box-shadow: 0 4px 0 #1B49C4;
 }
 
 .cta-bar .btn-primary:active {
   transform: translateY(2px);
-  box-shadow: 0 2px 0 #C24E11;
+  box-shadow: 0 2px 0 #1B49C4;
 }
 
 /* ==========================================================================
@@ -1218,6 +1253,11 @@ body {
   .work-list { grid-template-columns: 1fr 1fr; }
   .feat-groups { grid-template-columns: repeat(4, 1fr); }
   .cta-bar { justify-content: center; }
+
+  .hero-art { width: 158px; }
+  .site-title { font-size: 38px; }
+  .title-underline { width: 200px; }
+  .module-art { max-width: 440px; margin: 14px auto 0; }
 }
 
 /* 尊重系统的“减少动态效果”设置 */
