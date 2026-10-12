@@ -371,12 +371,12 @@
 
     document.getElementById('btn-known').addEventListener('click', function () {
       document.getElementById('result-feedback').textContent = D.COPY.KNOWN_TEXT;
-      saveResultChoice('我已知悉');
+      saveResultChoice('家长已知悉');
     });
 
     document.getElementById('btn-unknown').addEventListener('click', function () {
       document.getElementById('result-feedback').textContent = D.COPY.UNKNOWN_TEXT;
-      saveResultChoice('未知悉');
+      saveResultChoice('家长未知悉需回访');
     });
   }
 

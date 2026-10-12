@@ -459,8 +459,12 @@ test('结果页点击按钮会把选择上报到同一条报名记录', async ()
   await new Promise((resolve) => setTimeout(resolve, 30));
   assert.ok(reported, '点击按钮应上报结果');
   assert.equal(reported.id, submittedId);
-  assert.equal(reported.choice, '我已知悉');
+  assert.equal(reported.choice, '家长已知悉');
   assert.equal(dd.getElementById('result-save-status').textContent, '结果已记录');
+
+  dd.getElementById('btn-unknown').click();
+  await new Promise((resolve) => setTimeout(resolve, 30));
+  assert.equal(reported.choice, '家长未知悉需回访');
   dom.window.close();
 });
 
