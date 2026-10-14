@@ -46,7 +46,9 @@
               '<div class="teacher-school">' + esc(t.school) + '</div>' +
             '</div>' +
           '</div>' +
-          '<div class="teacher-honors">' + esc(t.honors.join('、')) + '</div>' +
+          '<div class="teacher-honors">' + t.honors.map(function (h) {
+            return '<span class="honor-tag">' + esc(h) + '</span>';
+          }).join('') + '</div>' +
           '</div>';
       }).join('');
     }
