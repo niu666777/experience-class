@@ -77,6 +77,9 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* 兜底：所有未单独设色的链接走深蓝墨色，绝不用浏览器默认高饱和蓝 */
+a { color: var(--blue-dark); text-decoration: none; }
+
 /* 彩铅/蜡笔纸张颗粒：整页叠一层极淡的噪点，做出手绘质感
    注意：这里不能用 mix-blend-mode —— 与 fixed 全屏层叠加时会被渲染成
    大面积同心圆环（headless 与部分 GPU 路径下必现），改成纯 alpha 叠加。 */
@@ -630,6 +633,41 @@ body::before {
   font-size: 13px;
   line-height: 1.76;
   color: var(--ink-soft);
+}
+
+/* 多学科覆盖：一组手绘学科小图标贴纸（素材规范：文字旁画一堆学科小图标） */
+.subject-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 11px 0 0;
+}
+
+.sub-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px 3px 6px;
+  background: #FFFFFF;
+  border: 1.8px solid var(--ink-line);
+  border-radius: 8px 6px 9px 5px / 6px 9px 5px 8px;
+  box-shadow: 1.5px 2px 0 rgba(27, 60, 116, 0.10);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-round);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.sub-chip svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+}
+
+.sub-chip i {
+  font-style: normal;
+  line-height: 1;
 }
 
 /* ==========================================================================

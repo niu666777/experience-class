@@ -2,13 +2,35 @@
   'use strict';
   var D = window.App;
 
+  // 多学科覆盖：一组手绘学科小图标贴纸（书本/算式/对话/画板/音符/球/代码/试管）
+  // 直接呼应素材规范「文字旁画一堆学科小图标」，强化"多学科"的视觉信号
+  var SUBJECT_CHIPS = [
+    { name: '语文', color: '#4E8DE8', svg: '<path d="M6.5 3.5h11a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V5.5a2 2 0 0 1 1.5-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 3.5v17" stroke="currentColor" stroke-width="1.8"/>' },
+    { name: '数学', color: '#4FAE8F', svg: '<rect x="4" y="3.5" width="16" height="17" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' },
+    { name: '英语', color: '#F2A93B', svg: '<path d="M4 5.5h16v8H9.5l-3.5 3.5v-3.5H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8.5l1.2 3.2h-2.4z M13 8.5v3.2 M13 8.5h2 M15 11.7h-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>' },
+    { name: '美术', color: '#8E6FE8', svg: '<path d="M12 3.5a8.5 8.5 0 1 0 0 17 3 3 0 0 0 3-3 2 2 0 0 1 2-2h1.5a3.5 3.5 0 0 0 3.5-3.5 8.5 8.5 0 0 0-10-8.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="8" cy="10.5" r="1.2" fill="currentColor"/><circle cx="12" cy="8" r="1.2" fill="currentColor"/><circle cx="16" cy="10.5" r="1.2" fill="currentColor"/>' },
+    { name: '乐器', color: '#4E8DE8', svg: '<path d="M9.5 17.5V6.5l8-2v11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="17.5" r="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="15.5" cy="15.5" r="2" fill="none" stroke="currentColor" stroke-width="2"/>' },
+    { name: '体育', color: '#4FAE8F', svg: '<circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 6.5v5.5l4 2 M12 12l-4 2 M12 12l5-1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' },
+    { name: '编程', color: '#F2A93B', svg: '<path d="M9.5 8l-4 4 4 4 M14.5 8l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' },
+    { name: '科学', color: '#8E6FE8', svg: '<path d="M9.5 3.5h5 M10.5 3.5v5L6 16.5a2 2 0 0 0 1.8 3h8.4a2 2 0 0 0 1.8-3L13.5 8.5v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7.5 14.5h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' }
+  ];
+
+  function subjectChips() {
+    return '<div class="subject-chips">' + SUBJECT_CHIPS.map(function (s) {
+      return '<span class="sub-chip" style="color:' + s.color + '">' +
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' + s.svg + '</svg>' +
+        '<i>' + s.name + '</i></span>';
+    }).join('') + '</div>';
+  }
+
   function renderPoster() {
     var featureList = document.getElementById('feature-list');
     if (featureList) {
       featureList.innerHTML = D.FEATURES.map(function (f) {
+        var extra = f.key === 'subjects' ? subjectChips() : '';
         return '<div class="feature-item">' +
           '<div class="feature-icon">' + D.featureCard(f.key) + '</div>' +
-          '<div class="feature-body"><h3>' + esc(f.title) + '</h3><p>' + esc(f.text) + '</p></div>' +
+          '<div class="feature-body"><h3>' + esc(f.title) + '</h3><p>' + esc(f.text) + '</p>' + extra + '</div>' +
           '</div>';
       }).join('');
     }
