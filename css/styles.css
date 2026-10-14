@@ -238,10 +238,14 @@ body::before {
 .hero-art {
   flex: 0 0 auto;
   display: block;
-  width: 104px;
+  width: 76px;
   height: auto;
-  margin: 0 -6px 0 -30px;
-  filter: drop-shadow(0 6px 0 rgba(78, 141, 232, 0.16));
+  margin: 0 -2px 0 -4px;
+  /* 新插画是米白纸底的彩铅画，做成一枚贴纸：描边圆角 + 微倾斜 */
+  border: 2.5px solid var(--ink-line);
+  border-radius: 10px 8px 11px 7px / 8px 11px 7px 10px;
+  box-shadow: 2px 3px 0 rgba(27, 60, 116, 0.14);
+  transform: rotate(2.5deg);
 }
 
 /* 蓝色手绘标签框 + 回形针（素材一左上角的标签） */
