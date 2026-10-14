@@ -296,8 +296,21 @@ body::before {
 .title-l1 { transform: rotate(-1.2deg); }
 
 .title-l2 {
+  position: relative;
   margin: 6px 0 0 12px;
   transform: rotate(1.4deg);
+}
+
+/* 标题旁的小星星贴纸（素材一：标题周围散布星星、线条装饰） */
+.title-l2::before {
+  content: "";
+  position: absolute;
+  left: -27px;
+  top: 7px;
+  width: 21px;
+  height: 21px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5c.8 4.8 2 6.2 6.8 7-4.8.8-6 2.2-6.8 7-.8-4.8-2-6.2-6.8-7 4.8-.8 6-2.2 6.8-7z' fill='%23FBD26A' stroke='%23B96B21' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transform: rotate(-14deg);
 }
 
 /* 蓝色缎带横幅（素材一的安排条） */
@@ -379,6 +392,7 @@ body::before {
 
 /* ==========================================================================
    模块卡片：蓝墨描边卡 + 贴上沿的蓝色标签（素材一的「学习时间」标签位）
+   三张卡带不同的小角度倾斜，像便签纸错落贴在笔记本上（素材二）
    ========================================================================== */
 .module-card {
   position: relative;
@@ -389,6 +403,10 @@ body::before {
   border-radius: var(--wobble);
   box-shadow: 5px 6px 0 rgba(78, 141, 232, 0.10);
 }
+
+.module-card:nth-of-type(1) { transform: rotate(-0.9deg); }
+.module-card:nth-of-type(2) { transform: rotate(0.7deg); }
+.module-card:nth-of-type(3) { transform: rotate(-0.6deg); }
 
 /* 手绘胶带（贴右上角，避开左上角的模块标签） */
 .module-card::before {
@@ -417,6 +435,48 @@ body::before {
   background:
     repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.5) 0 6px, transparent 6px 12px),
     #FFC4D6;
+}
+
+/* 卡片下沿的主题小贴纸涂鸦：半跨下边框，落在卡片间隙里，不遮正文
+   （素材二：装饰围绕卡片四周 —— 烧杯、靶心、柱状图对应模块主题） */
+.mod-doodle {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  color: var(--blue);
+  background: #FFFFFF;
+  border: 2px solid var(--ink-line);
+  border-radius: 10px 8px 11px 7px / 8px 11px 7px 10px;
+  box-shadow: 2px 3px 0 rgba(27, 60, 116, 0.12);
+  pointer-events: none;
+}
+
+.mod-doodle svg { width: 100%; height: 100%; }
+
+/* 课程特色：烧杯，右下 */
+.module-card:nth-of-type(1) .mod-doodle { right: 20px; bottom: -14px; transform: rotate(-6deg); }
+
+/* 师资力量：靶心，左下，绿叶色点缀 */
+.module-card:nth-of-type(2) .mod-doodle {
+  left: 20px;
+  bottom: -14px;
+  transform: rotate(5deg);
+  color: #4FAE8F;
+  border-color: #BFE6D8;
+}
+
+/* 往期学员成果：柱状图上升箭头，右下，暖橙点缀 */
+.module-card:nth-of-type(3) .mod-doodle {
+  right: 24px;
+  bottom: -14px;
+  transform: rotate(-4deg);
+  color: var(--orange);
+  border-color: #F6D9B8;
 }
 
 .module-head {
@@ -561,7 +621,7 @@ body::before {
   height: 17px;
   border-radius: 5px;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.6 8.6l3 3 6.1-6.8' fill='none' stroke='%232F6BFF' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 13px 13px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.6 8.6l3 3 6.1-6.8' fill='none' stroke='%234E8DE8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 13px 13px no-repeat,
     #FFFFFF;
 }
 
