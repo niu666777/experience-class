@@ -77,6 +77,9 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* 兜底：所有未单独设色的链接走深蓝墨色，绝不用浏览器默认高饱和蓝 */
+a { color: var(--blue-dark); text-decoration: none; }
+
 /* 彩铅/蜡笔纸张颗粒：整页叠一层极淡的噪点，做出手绘质感
    注意：这里不能用 mix-blend-mode —— 与 fixed 全屏层叠加时会被渲染成
    大面积同心圆环（headless 与部分 GPU 路径下必现），改成纯 alpha 叠加。 */
@@ -235,10 +238,14 @@ body::before {
 .hero-art {
   flex: 0 0 auto;
   display: block;
-  width: 104px;
+  width: 76px;
   height: auto;
-  margin: 0 -6px 0 -30px;
-  filter: drop-shadow(0 6px 0 rgba(78, 141, 232, 0.16));
+  margin: 0 -2px 0 -4px;
+  /* 新插画是米白纸底的彩铅画，做成一枚贴纸：描边圆角 + 微倾斜 */
+  border: 2.5px solid var(--ink-line);
+  border-radius: 10px 8px 11px 7px / 8px 11px 7px 10px;
+  box-shadow: 2px 3px 0 rgba(27, 60, 116, 0.14);
+  transform: rotate(2.5deg);
 }
 
 /* 蓝色手绘标签框 + 回形针（素材一左上角的标签） */
@@ -632,6 +639,41 @@ body::before {
   color: var(--ink-soft);
 }
 
+/* 多学科覆盖：一组手绘学科小图标贴纸（素材规范：文字旁画一堆学科小图标） */
+.subject-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 11px 0 0;
+}
+
+.sub-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px 3px 6px;
+  background: #FFFFFF;
+  border: 1.8px solid var(--ink-line);
+  border-radius: 8px 6px 9px 5px / 6px 9px 5px 8px;
+  box-shadow: 1.5px 2px 0 rgba(27, 60, 116, 0.10);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-round);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.sub-chip svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+}
+
+.sub-chip i {
+  font-style: normal;
+  line-height: 1;
+}
+
 /* ==========================================================================
    师资力量 —— 素材二：照片框与文字左右交替
    ========================================================================== */
@@ -668,10 +710,14 @@ body::before {
   aspect-ratio: 4 / 5;
   object-fit: cover;
   display: block;
-  border: 3px solid var(--blue);
-  border-radius: var(--wobble);
-  box-shadow: 4px 5px 0 rgba(78, 141, 232, 0.14);
+  /* Q版彩铅头像按贴纸处理：蓝墨描边 + 微倾斜 + 硬投影 */
+  border: 2.5px solid var(--ink-line);
+  border-radius: 14px 10px 15px 9px / 10px 15px 9px 14px;
+  box-shadow: 3px 4px 0 rgba(27, 60, 116, 0.14);
+  transform: rotate(-2.2deg);
 }
+
+.teacher-card:nth-child(even) .teacher-photo { transform: rotate(2.2deg); }
 
 .teacher-info { grid-area: info; min-width: 0; }
 
@@ -699,9 +745,30 @@ body::before {
   grid-area: honors;
   align-self: center;
   margin-top: 8px;
-  font-size: 12.5px;
-  line-height: 1.7;
-  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* 荣誉做成一枚枚小贴纸标签，呼应素材的手账标签语言 */
+.honor-tag {
+  display: inline-block;
+  padding: 3px 9px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--blue-deep);
+  background: var(--amber-soft);
+  border: 1.5px solid var(--amber);
+  border-radius: 8px 6px 9px 5px / 6px 9px 5px 8px;
+  box-shadow: 2px 2px 0 rgba(185, 107, 33, 0.14);
+}
+
+.teacher-card:nth-child(even) .honor-tag {
+  background: var(--green-soft);
+  border-color: var(--leaf);
+  color: #2E7A64;
+  box-shadow: 2px 2px 0 rgba(46, 122, 100, 0.14);
 }
 
 
@@ -715,6 +782,7 @@ body::before {
 }
 
 .work-card {
+  position: relative;
   padding: 7px 7px 0;
   background: #FFFFFF;
   border: 2.5px solid var(--blue);
@@ -722,6 +790,22 @@ body::before {
   box-shadow: 4px 5px 0 rgba(78, 141, 232, 0.13);
   overflow: hidden;
   transition: transform 0.18s ease;
+}
+
+/* 成果卡右上角贴斜纹胶带，与模块卡的手账语言一致 */
+.work-card::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  right: 14px;
+  width: 52px;
+  height: 15px;
+  transform: rotate(4deg);
+  border-radius: 2px;
+  opacity: 0.85;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.55) 0 5px, transparent 5px 10px),
+    var(--amber);
 }
 
 .work-card:nth-child(odd) { transform: rotate(0.6deg); }
@@ -744,8 +828,10 @@ body::before {
 
 .work-label {
   padding: 9px 4px 11px;
-  font-size: 12.5px;
-  font-weight: 800;
+  font-family: var(--font-hand);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   line-height: 1.4;
   text-align: center;
   color: var(--blue-dark);
@@ -993,10 +1079,14 @@ body::before {
   width: 96px;
   height: 118px;
   object-fit: cover;
+  /* Q版彩铅头像贴纸化：白边相框 + 微倾斜 */
   border: 3px solid #FFFFFF;
-  border-radius: 14px;
+  border-radius: 12px 9px 13px 8px / 9px 13px 8px 12px;
   box-shadow: 0 0 0 2px var(--sky-2), 4px 5px 0 rgba(27, 60, 116, 0.14);
+  transform: rotate(-2deg);
 }
+
+.detail-teacher:nth-child(even) .detail-teacher-photo { transform: rotate(2deg); }
 
 .detail-teacher-main { flex: 1; min-width: 0; }
 
