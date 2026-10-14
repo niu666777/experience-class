@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>报名数据查看</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f4f6fb; color: #2e3440; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 20px 14px 40px; }
+  h1 { font-size: 22px; margin: 8px 0 16px; color: #1636a8; }
+  .card { background: #fff; border: 1px solid #e4ecf7; border-radius: 14px; padding: 16px; box-shadow: 0 8px 24px rgba(22, 54, 168, 0.06); margin-bottom: 14px; }
+  .gate { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .gate input { flex: 1 1 220px; min-width: 0; padding: 12px; font-size: 15px; border: 1.5px solid #dce7f7; border-radius: 10px; }
+  .gate input:focus { outline: none; border-color: #2f6bff; }
+  .gate button, .toolbar button { padding: 11px 18px; border: none; border-radius: 10px; background: #2f6bff; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .err { margin-top: 8px; font-size: 13px; color: #e5484d; min-height: 18px; }
+  .toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  .toolbar .count { font-size: 14px; color: #7a8494; }
+  .toolbar .updated { font-size: 12px; color: #a0a8b8; margin-left: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid #eef2f8; vertical-align: top; word-break: break-word; }
+  th { color: #1636a8; font-weight: 800; background: #f4f8ff; white-space: nowrap; }
+  .empty, .loading { padding: 30px; text-align: center; color: #a0a8b8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>报名数据查看</h1>
+
+  <div class="card" id="gate">
+    <div class="gate">
+      <input type="password" id="pwd" placeholder="请输入查看密码" autocomplete="off">
+      <button id="btn-view">查看数据</button>
+    </div>
+    <div class="err" id="err"></div>
+  </div>
+
+  <div class="card" id="panel" hidden>
+    <div class="toolbar">
+      <button id="btn-refresh">刷新</button>
+      <span class="count" id="count"></span>
+      <span class="updated" id="updated"></span>
+    </div>
+    <div class="loading" id="loading" hidden>加载中…</div>
+    <div class="table-wrap" id="table-wrap"></div>
+    <div class="empty" id="empty" hidden>暂无报名数据</div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script>
+(function () {
+  'use strict';
+  var cfg = (window.App && window.App.CONFIG) || {};
+  var SUPABASE_URL = cfg.SUPABASE_URL || '';
+  var SUPABASE_ANON_KEY = cfg.SUPABASE_ANON_KEY || '';
+  var pwdEl = document.getElementById('pwd');
+  var errEl = document.getElementById('err');
+  var gateEl = document.getElementById('gate');
+  var panelEl = document.getElementById('panel');
+  var tableWrap = document.getElementById('table-wrap');
+  var emptyEl = document.getElementById('empty');
+  var loadingEl = document.getElementById('loading');
+  var countEl = document.getElementById('count');
+  var updatedEl = document.getElementById('updated');
+  var currentPwd = null;
+  var timer = null;
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function nowLocal() {
+    var d = new Date();
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+  function fmtTime(s) {
+    if (!s) { return ''; }
+    return String(s).replace('T', ' ').slice(0, 16);
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function setError(msg) { errEl.textContent = msg || ''; }
+
+  function render(rows) {
+    if (!rows || !rows.length) {
+      tableWrap.innerHTML = '';
+      emptyEl.hidden = false;
+      countEl.textContent = '共 0 条';
+      updatedEl.textContent = '更新于 ' + nowLocal();
+      return;
+    }
+    emptyEl.hidden = true;
+    var html = '<table><thead><tr>' +
+      '<th>提交时间</th><th>家长</th><th>孩子</th><th>课程</th><th>手机号</th><th>结果</th>' +
+      '</tr></thead><tbody>';
+    for (var i = 0; i < rows.length; i += 1) {
+      var r = rows[i];
+      html += '<tr>' +
+        '<td>' + esc(fmtTime(r.created_at)) + '</td>' +
+        '<td>' + esc(r.parents) + '</td>' +
+        '<td>' + esc(r.children) + '</td>' +
+        '<td>' + esc(r.courses) + '</td>' +
+        '<td>' + esc(r.phone) + '</td>' +
+        '<td>' + esc(r.result_choice) + '</td>' +
+        '</tr>';
+    }
+    html += '</tbody></table>';
+    tableWrap.innerHTML = html;
+    countEl.textContent = '共 ' + rows.length + ' 条';
+    updatedEl.textContent = '更新于 ' + nowLocal();
+  }
+
+  function load(pwd, silent) {
+    if (!silent) {
+      loadingEl.hidden = false;
+      tableWrap.innerHTML = '';
+      emptyEl.hidden = true;
+    }
+    setError('');
+    return fetch(SUPABASE_URL + '/rest/v1/rpc/get_registrations', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ pwd: pwd })
+    }).then(function (res) {
+      if (res.ok) { return res.json(); }
+      return res.text().then(function (t) {
+        var msg = '加载失败';
+        try { var j = JSON.parse(t); if (j && j.message) { msg = j.message; } } catch (e) {}
+        throw new Error(msg);
+      });
+    }).then(function (rows) {
+      loadingEl.hidden = true;
+      render(rows);
+      return true;
+    }).catch(function (e) {
+      loadingEl.hidden = true;
+      if (!silent) {
+        setError(e.message === '密码错误' ? '密码错误，请重新输入' : '加载失败，请检查网络后重试');
+      } else {
+        updatedEl.textContent = '自动刷新失败';
+      }
+      throw e;
+    });
+  }
+
+  function startAuto() {
+    if (timer) { clearInterval(timer); }
+    timer = setInterval(function () {
+      if (currentPwd) { load(currentPwd, true).catch(function () {}); }
+    }, 30000);
+  }
+
+  document.getElementById('btn-view').addEventListener('click', function () {
+    var pwd = pwdEl.value.trim();
+    if (!pwd) { setError('请输入密码'); return; }
+    load(pwd, false).then(function () {
+      currentPwd = pwd;
+      gateEl.hidden = true;
+      panelEl.hidden = false;
+      startAuto();
+    }).catch(function () {});
+  });
+
+  pwdEl.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { document.getElementById('btn-view').click(); }
+  });
+
+  document.getElementById('btn-refresh').addEventListener('click', function () {
+    if (currentPwd) { load(currentPwd, false).catch(function () {}); }
+  });
+})();
+</script>
+</body>
+</html>
