@@ -21,7 +21,7 @@
 - **首屏大标题 `.site-title`（第一视觉焦点）**：两行错位的方正舒体，「XXX体验课」`.title-l1`（`rotate(-1.2deg)`）与「报名啦！」`.title-l2`（`rotate(1.4deg)`）。41px / 桌面 54px，**白字 + `--blue-dark` 八向实心描边 + `6px 7px 0 rgba(27,60,116,.28)` 硬投影**，做成手绘贴纸。加大字号后曾挤到换行成三行，靠收紧 `.page-head` 左内边距（26px）和 `.hero-art` 宽（104px、`margin: 0 -6px 0 -30px`）解决 —— **再动这两个值要重新验证不换行**。
 - **模块标题**：`.module-title` 绝对定位 `top:0; translateY(-50%)` 跨骑卡片上边框；胶带 `.module-card::before` 在右上角（三卡三色斜纹：琥珀黄/浅蓝/粉）。
 - **卡片错落感**：`.module-card:nth-of-type(1/2/3)` 分别 `rotate(-0.9/0.7/-0.6deg)`，像便签贴在笔记本上；卡片下沿半跨一枚 `.mod-doodle` 32px 主题贴纸（烧杯/靶心/柱状图，`bottom:-14px`），图案必须和模块主题对应。
-- **图文交替**：`.feature-item`、`.teacher-card` 左右并排 + `:nth-child(even)` 镜像 → 图-文 / 文-图。**禁止"一整块图 + 一整段文字"堆叠**（用户明确否掉过）。`.teacher-top` 用 `display:contents` 让照片脱出包裹层参与 grid。**全页必须蜡笔风图文嵌套**——师资/成果模块也曾因用真实照片被用户否掉（"整个报名页是蜡笔风，不仅仅是课程特色的某个图片"），v3.5 起全站插画化。
+- **图文交替**：`.feature-item`、`.teacher-card` 左右并排 + `:nth-child(even)` 镜像 → 图-文 / 文-图。**禁止"一整块图 + 一整段文字"堆叠**（用户明确否掉过）。`.teacher-top` 用 `display:contents` 让照片脱出包裹层参与 grid。**插画范围（v3.6 定稿）：仅首屏主视觉 + 三张课程特色配图为彩铅插画；师资力量与往期学员成果必须用真实照片**——v3.5 曾全站插画化，v3.6 用户明确要求"老师照片和往期学员成果还是别改了"（真实人像/活动照的可信度是这两个模块的核心价值），已从 git `e076f86` 恢复。**别再把这两处换成插画**。
 - 插画框 `.feature-icon` 固定 `aspect-ratio: 3/2` + `object-fit:cover`；原矢量图标降级成右下角小印章（测试断言 `.feature-icon svg` 必须存在，别删）。
 - ✅ 项目符号：详情页 `.feat-points li` / `.detail-teacher-section li` 用蓝色勾选方框（data-URI SVG）作 `::before`。
 - 按钮：主按钮是**蓝色**渐变（用户否掉过橙色）。底部 `.cta-bar` 是**深蓝通栏（`--ink-bar #1B3C74`）**，`position: sticky; bottom: 0` 吸底，通栏内**只有一个撑满整条的「立即报名」按钮**（手写体 19px/桌面 21px）—— 用户明确要求**不要任何其他文字、不要指引箭头**，辅助文案会稀释主按钮。改回多文案 = 回退用户的评审意见。
@@ -29,10 +29,11 @@
 ## 结构性约束（改动前必看）
 `app.js` 生成的 class 名与数量是测试断言的一部分：`.feature-item`×3、`.teacher-card`×2、`.work-card`×3、`.module-card .link-more`×3、`.detail-block`×3、`.detail-teacher`×2、`.work-item`×4、`.teacher-photo/.teacher-name/.teacher-school`、`#feature-list .feature-icon svg`、`.detail-block .detail-art svg`×3。**改视觉可以，别改这些钩子。**
 
-## 插画素材（AI 生成，v3.5 全页插画化）
-- **全站 10 张插画统一彩铅蜡笔质感**（对齐素材一/素材二画风）：以 `素材一.jpg`/`素材二.jpg` 为 ImageGen 风格参考（`input_fidelity: high`）image-to-image 生成。包括 `hero-kids.png`（350×457 竖版）、`feature-subjects/feedback/continue.png`（480×320）、**v3.5 新换**：`teacher-yinguangyang.jpg`/`teacher-niushike.jpg`（Q版彩铅老师头像，208×260，覆盖原真实证件照）+ `work-math/english/science/art.jpg`（彩铅场景插画，480×320，覆盖原真实活动照）。**改画风必须以素材原图为参考重新生成，不要凭文字描述猜风格**——v3.2 之前踩过这个坑，生成的扁平矢量图被用户否掉。
-- **`.jpg` 文件里装的是 PNG 数据（调色板 PNG8）**：测试断言锁死了 `src=images/teacher-yinguangyang.jpg` 后缀，而纯 Python 写不了 JPEG，故直接把 PNG 字节写入 .jpg 文件——浏览器（Blink）按魔数解码，file:// 与 GitHub Pages 均正常，已验证。
-- **老师/成果卡样式**：头像贴纸化（ink-line 描边 + rotate(±2.2deg) 交替）；荣誉 `honor-tag` 逐枚小贴纸标签（奇卡琥珀黄/偶卡浅绿）；`work-card::before` 右上斜纹胶带 + `.work-label` 手写体。
+## 插画素材（v3.6 定稿：4 张彩铅插画 + 师资/成果真实照片）
+- **彩铅插画仅 4 张**（以 `素材一.jpg`/`素材二.jpg` 为 ImageGen 风格参考，`input_fidelity: high`）：`hero-kids.png`（350×457 竖版）、`feature-subjects/feedback/continue.png`（480×320）。**改画风必须以素材原图为参考重新生成，不要凭文字描述猜风格**——v3.2 之前踩过这个坑，生成的扁平矢量图被用户否掉。
+- **师资/成果 6 张是真实照片**（v3.6 从 git `e076f86` 恢复）：`teacher-yinguangyang.jpg`/`teacher-niushike.jpg`（真实证件照）+ `work-math/english/science/art.jpg`（真实活动照）。v3.5 曾把这 6 张换成彩铅插画，用户要求改回。**如需再生成插画，先确认用户是否又要换**。
+- **`.jpg` 文件曾装 PNG 数据（调色板 PNG8）**：v3.5 期间因测试断言锁死后缀 + 纯 Python 写不了 JPEG 而把 PNG 字节写入 .jpg（浏览器按魔数解码正常）。v3.6 恢复真实 JPEG 后此做法已不适用，但教训保留：`git checkout <commit> -- <file>` 可无损找回历史图片。
+- **老师/成果卡样式（真实照片同样适用，v3.6 保留）**：照片贴纸化（ink-line 描边 + rotate(±2.2deg) 交替）；荣誉 `honor-tag` 逐枚小贴纸标签（奇卡琥珀黄/偶卡浅绿）；`work-card::before` 右上斜纹胶带 + `.work-label` 手写体。
 - **hero 是米白不透明底** → `.hero-art` 用贴纸样式（ink-line 描边圆角 + rotate(2.5deg)），**不能再用负 margin 叠压标题**（不透明底会盖字）；移动端 `width: 76px` 是标题不换行的临界值，桌面 178px。
 - 风格提示词模板：「完全模仿参考图的彩色铅笔手绘插画质感：蜡笔与彩铅混合涂抹笔触，颜色深浅不均匀、带明显的纸张颗粒感和手绘抖动轮廓线，2D平面卡通儿童教育插画，浅蓝米白底色，深蓝色描边，暖橙色和浅绿色点缀……画面中绝对不要出现任何文字。」
 - **生成时的坑**：
